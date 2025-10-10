@@ -1,10 +1,16 @@
 package UI;
+
 import Model.Appliance;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
-public class LoadInputPanel {
+
+/**
+ * LoadInputPanel - Modern, responsive appliance input form
+ */
+public class LoadInputPanel extends JPanel {
+
     private static final long serialVersionUID = 1L;
     private final MainPage mainPage;
 
@@ -72,6 +78,7 @@ public class LoadInputPanel {
 
         return wrapper;
     }
+
     private JPanel createHeader() {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
@@ -152,6 +159,7 @@ public class LoadInputPanel {
 
         return card;
     }
+
     private JPanel createAutoRedirectOption() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
@@ -200,6 +208,7 @@ public class LoadInputPanel {
 
         return row;
     }
+
     private JTextField createInputField(String placeholder) {
         JTextField field = new JTextField(placeholder);
         field.setFont(new Font("Segoe UI", Font.PLAIN, 15));
@@ -247,6 +256,7 @@ public class LoadInputPanel {
 
         return navPanel;
     }
+
     private JButton createModernButton(String text, Color bgColor, Color hoverColor) {
         JButton button = new JButton(text);
         button.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -318,6 +328,7 @@ public class LoadInputPanel {
             showError("Please enter valid numbers for Watts, Quantity, and Hours.");
         }
     }
+
     private void goToApplianceList() {
         // ✅ No need to transfer - just navigate
         mainPage.showApplianceListPanel();
