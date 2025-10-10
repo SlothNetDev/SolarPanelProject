@@ -249,4 +249,76 @@ public class ApplianceListPanel {
         for (Appliance a : appliances) listModel.addElement(a);
         updateDeleteButton();
     }
+    private void deleteSelectedAppliances() {
+        if (checkedIndices.isEmpty()) {
+            showWarning("Please select at least one appliance to delete.");
+            return;
+        }
+
+        List<Appliance> toDelete = new ArrayList<>();
+        for (int index : checkedIndices) {
+            toDelete.add(listModel.get(index));
+        }
+
+        String msg = (toDelete.size() == 1)
+                ? "Are you sure you want to delete '" + toDelete.get(0).getName() + "'?"
+                : "Are you sure you want to delete " + toDelete.size() + " selected appliances?";
+
+        int confirm = JOptionPane.showConfirmDialog(this, msg, "Confirm Delete",
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            for (Appliance a : toDelete) {
+                mainPage.getAppliances().remove(a);
+                listModel.removeElement(a);
+            }
+            checkedIndices.clear();
+            updateDeleteButton();
+            JOptionPane.showMessageDialog(this, "✓ " + toDelete.size() + " appliance(s) deleted.",
+                    "Deleted", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void showWarning(String message) {
+        JOptionPane.showMessageDialog(this, message, "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
+    private class ModernApplianceRenderer extends JPanel implements ListCellRenderer<Appliance> {
+        private JLabel nameLabel, detailsLabel, energyLabel;
+        private JCheckBox selectionBox;
+
+        public ModernApplianceRenderer() {
+            setLayout(new BorderLayout(15, 5));
+            setOpaque(true);
+            setBorder(BorderFactory.createEmptyBorder(12, 16, 12, 16));
+
+            selectionBox = new JCheckBox();
+            selectionBox.setOpaque(false);
+            selectionBox.setFocusPainted(false);
+
+            JPanel leftPanel = new JPanel();
+            leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+            leftPanel.setOpaque(false);
+
+            nameLabel = new JLabel();
+            nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+            nameLabel.setForeground(TEXT_PRIMARY);
+
+            detailsLabel = new JLabel();
+            detailsLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+            detailsLabel.setForeground(TEXT_SECONDARY);
+
+            leftPanel.add(nameLabel);
+            leftPanel.add(Box.createVerticalStrut(4));
+            leftPanel.add(detailsLabel);
+
+            energyLabel = new JLabel();
+            energyLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            energyLabel.setForeground(ACCENT_COLOR);
+            energyLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+            add(selectionBox, BorderLayout.WEST);
+            add(leftPanel, BorderLayout.CENTER);
+            add(energyLabel, BorderLayout.EAST);
+        }
 }
