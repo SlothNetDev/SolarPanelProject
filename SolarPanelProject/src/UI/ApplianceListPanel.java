@@ -1,4 +1,5 @@
 package UI;
+
 import Model.Appliance;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
@@ -7,7 +8,8 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.*;
 
-public class ApplianceListPanel {
+public class ApplianceListPanel extends JPanel {
+
     private static final long serialVersionUID = 1L;
     private final MainPage mainPage;
     private final List<Appliance> appliances;
@@ -44,6 +46,7 @@ public class ApplianceListPanel {
         mainScroll.getVerticalScrollBar().setUnitIncrement(16);
         add(mainScroll, BorderLayout.CENTER);
     }
+
     private JPanel createMainContent() {
         JPanel wrapper = new JPanel(new GridBagLayout());
         wrapper.setOpaque(false);
@@ -63,6 +66,7 @@ public class ApplianceListPanel {
         wrapper.add(contentPanel, new GridBagConstraints());
         return wrapper;
     }
+
     private JPanel createHeader() {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
@@ -90,6 +94,7 @@ public class ApplianceListPanel {
 
         return headerPanel;
     }
+
     private JPanel createListCard() {
         JPanel card = new JPanel(new BorderLayout(0, 15));
         card.setBackground(CARD_BG);
@@ -163,6 +168,7 @@ public class ApplianceListPanel {
             }
         });
     }
+
     private JPanel createActionPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -204,6 +210,8 @@ public class ApplianceListPanel {
             deleteBtn.setForeground(new Color(156, 163, 175));
         }
     }
+
+
     private JButton createModernButton(String text, Color bgColor, Color hoverColor, boolean outline) {
         JButton button = new JButton(text);
         button.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -249,6 +257,7 @@ public class ApplianceListPanel {
         for (Appliance a : appliances) listModel.addElement(a);
         updateDeleteButton();
     }
+
     private void deleteSelectedAppliances() {
         if (checkedIndices.isEmpty()) {
             showWarning("Please select at least one appliance to delete.");
@@ -338,6 +347,7 @@ public class ApplianceListPanel {
             return this;
         }
     }
+
     private static class RoundedBorder extends AbstractBorder {
         private final Color color;
         private final int radius;
