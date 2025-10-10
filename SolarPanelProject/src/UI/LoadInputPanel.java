@@ -200,5 +200,51 @@ public class LoadInputPanel {
 
         return row;
     }
+    private JTextField createInputField(String placeholder) {
+        JTextField field = new JTextField(placeholder);
+        field.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        field.setForeground(new Color(148, 163, 184));
+        field.setHorizontalAlignment(JTextField.CENTER);
+        field.setBorder(BorderFactory.createCompoundBorder(
+                new RoundedBorder(INPUT_BORDER, 8),
+                BorderFactory.createEmptyBorder(10, 14, 10, 14)
+        ));
 
+        field.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(TEXT_PRIMARY);
+                }
+            }
+
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setForeground(new Color(148, 163, 184));
+                    field.setText(placeholder);
+                }
+            }
+        });
+
+        return field;
+    }
+
+    private JPanel createNavigationPanel() {
+        JPanel navPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
+        navPanel.setOpaque(false);
+        navPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+
+        JButton viewListBtn = createModernButton("📋 View Appliance List →", SUCCESS_COLOR, SUCCESS_HOVER);
+
+        viewListBtn.addActionListener(e -> {
+            if (mainPage.getAppliances().isEmpty()) {
+                showWarning("Please add at least one appliance first.");
+                return;
+            }
+            goToApplianceList();
+        });
+        navPanel.add(viewListBtn);
+
+        return navPanel;
+    }
 }
