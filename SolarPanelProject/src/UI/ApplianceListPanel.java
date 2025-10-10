@@ -63,4 +63,32 @@ public class ApplianceListPanel {
         wrapper.add(contentPanel, new GridBagConstraints());
         return wrapper;
     }
+    private JPanel createHeader() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+        headerPanel.setOpaque(false);
+
+        JLabel icon = new JLabel("📋", SwingConstants.CENTER);
+        icon.setFont(new Font("Segoe UI", Font.PLAIN, 48));
+        icon.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel title = new JLabel("Your Appliances", SwingConstants.CENTER);
+        title.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        title.setForeground(TEXT_PRIMARY);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel subtitle = new JLabel("Review and manage your appliance list", SwingConstants.CENTER);
+        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        subtitle.setForeground(TEXT_SECONDARY);
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        headerPanel.add(icon);
+        headerPanel.add(Box.createVerticalStrut(10));
+        headerPanel.add(title);
+        headerPanel.add(Box.createVerticalStrut(8));
+        headerPanel.add(subtitle);
+
+        return headerPanel;
+    }
+
 }
