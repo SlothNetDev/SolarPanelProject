@@ -152,4 +152,53 @@ public class LoadInputPanel {
 
         return card;
     }
+    private JPanel createAutoRedirectOption() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        panel.setOpaque(false);
+        panel.setMaximumSize(new Dimension(300, 40));
+
+        autoRedirectCheckbox = new JCheckBox("Go to appliance list after adding");
+        autoRedirectCheckbox.setSelected(true); // Default to enabled
+        autoRedirectCheckbox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        autoRedirectCheckbox.setForeground(TEXT_SECONDARY);
+        autoRedirectCheckbox.setOpaque(false);
+        autoRedirectCheckbox.setFocusPainted(false);
+
+        panel.add(autoRedirectCheckbox);
+        return panel;
+    }
+
+    private JPanel createFormRow(String labelText, JTextField field, String helpText) {
+        JPanel row = new JPanel();
+        row.setLayout(new BoxLayout(row, BoxLayout.Y_AXIS));
+        row.setOpaque(false);
+        row.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        label.setForeground(TEXT_PRIMARY);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        field.setAlignmentX(Component.CENTER_ALIGNMENT);
+        field.setMaximumSize(new Dimension(250, 42));
+        field.setBorder(BorderFactory.createCompoundBorder(
+                new RoundedBorder(INPUT_BORDER, 8),
+                BorderFactory.createEmptyBorder(10, 14, 10, 14)
+        ));
+
+        JLabel help = new JLabel(helpText);
+        help.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        help.setForeground(TEXT_SECONDARY);
+        help.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        row.add(label);
+        row.add(Box.createVerticalStrut(6));
+        row.add(field);
+        row.add(Box.createVerticalStrut(4));
+        row.add(help);
+
+        return row;
+    }
+
 }
