@@ -204,4 +204,49 @@ public class ApplianceListPanel {
             deleteBtn.setForeground(new Color(156, 163, 175));
         }
     }
+    private JButton createModernButton(String text, Color bgColor, Color hoverColor, boolean outline) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        button.setFocusPainted(false);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setPreferredSize(new Dimension(220, 44));
+
+        if (outline) {
+            button.setBackground(CARD_BG);
+            button.setBorder(BorderFactory.createCompoundBorder(
+                    new RoundedBorder(bgColor, 8),
+                    BorderFactory.createEmptyBorder(10, 20, 10, 20)
+            ));
+            button.setForeground(bgColor);
+        } else {
+            button.setBackground(bgColor);
+            button.setForeground(Color.WHITE);
+            button.setBorderPainted(false);
+            button.setOpaque(true);
+        }
+
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                if (button.isEnabled()) {
+                    button.setBackground(outline ? new Color(254, 242, 242) : hoverColor);
+                }
+            }
+
+            public void mouseExited(MouseEvent e) {
+                if (button.isEnabled()) {
+                    button.setBackground(outline ? CARD_BG : bgColor);
+                }
+            }
+        });
+
+        return button;
+    }
+
+    public void refreshList() {
+        if (listModel == null) return;
+        listModel.clear();
+        checkedIndices.clear();
+        for (Appliance a : appliances) listModel.addElement(a);
+        updateDeleteButton();
+    }
 }
