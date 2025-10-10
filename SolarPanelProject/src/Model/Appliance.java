@@ -67,5 +67,29 @@ public class Appliance {
         }
         return true;
     }
+    //Create Getter and Setter methods for each field
+    // ===== Getters / Setters =====
+    public String getName() { return name; }
+    public double getWatts() { return watts; }
+    public int getQuantity() { return quantity; }
+    public double getHoursPerDay() { return hoursPerDay; }
+
+    // NEW: Solar parameter getters/setters
+    public double getPeakSunHours() { return peakSunHours; }
+    public double getDepthOfDischarge() { return depthOfDischarge; }
+    public int getDaysOfAutonomy() { return daysOfAutonomy; }
+    public int getSystemVoltage() { return systemVoltage; }
+
+    public void setName(String name) { this.name = name; }
+    public void setWatts(double watts) { this.watts = watts; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setHoursPerDay(double hoursPerDay) { this.hoursPerDay = hoursPerDay; }
+
+    // NEW: Solar parameter setters
+    public void setPeakSunHours(double peakSunHours) { this.peakSunHours = peakSunHours; }
+    public void setDepthOfDischarge(double depthOfDischarge) { this.depthOfDischarge = depthOfDischarge; }
+    public void setDaysOfAutonomy(int daysOfAutonomy) { this.daysOfAutonomy = daysOfAutonomy; }
+    public void setSystemVoltage(int systemVoltage) { this.systemVoltage = systemVoltage; }
+
 
 }
