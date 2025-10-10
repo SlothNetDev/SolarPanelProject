@@ -247,4 +247,75 @@ public class LoadInputPanel {
 
         return navPanel;
     }
+    private JButton createModernButton(String text, Color bgColor, Color hoverColor) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setPreferredSize(new Dimension(220, 44));
+
+        button.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(hoverColor);
+            }
+
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(bgColor);
+            }
+        });
+
+        return button;
+    }
+
+    private void addAppliance() {
+        String name = getFieldValue(nameField);
+        if (name.isEmpty()) {
+            showError("Please enter an appliance name.");
+            return;
+        }
+
+        try {
+            String wattsStr = getFieldValue(wattsField);
+            String qtyStr = getFieldValue(qtyField);
+            String hoursStr = getFieldValue(hoursField);
+
+            double watts = Double.parseDouble(wattsStr);
+            int qty = Integer.parseInt(qtyStr);
+            double hours = Double.parseDouble(hoursStr);
+
+            if (watts <= 0 || qty <= 0 || hours <= 0) {
+                showError("All numeric values must be greater than zero.");
+                return;
+            }
+
+            Appliance appliance = new Appliance(name, watts, qty, hours);
+            mainPage.getAppliances().add(appliance); // ✅ Add directly to shared list
+
+            showSuccess(String.format("✓ Added: %s (%dW × %d)", name, (int) watts, qty));
+
+            // Clear fields for next entry
+            clearField(nameField, "e.g., LED Bulb");
+            clearField(wattsField, "e.g., 10");
+            clearField(qtyField, "e.g., 5");
+            clearField(hoursField, "e.g., 4.5");
+
+            // Auto-redirect if checkbox is selected
+            if (autoRedirectCheckbox.isSelected()) {
+                // Small delay to let user see the success message
+                Timer timer = new Timer(800, e -> goToApplianceList());
+                timer.setRepeats(false);
+                timer.start();
+            } else {
+                // Stay on current panel and focus on name field for next entry
+                nameField.requestFocus();
+            }
+
+        } catch (NumberFormatException ex) {
+            showError("Please enter valid numbers for Watts, Quantity, and Hours.");
+        }
+    }
 }
