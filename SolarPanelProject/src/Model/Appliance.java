@@ -91,5 +91,32 @@ public class Appliance {
     public void setDaysOfAutonomy(int daysOfAutonomy) { this.daysOfAutonomy = daysOfAutonomy; }
     public void setSystemVoltage(int systemVoltage) { this.systemVoltage = systemVoltage; }
 
+    /**
+     * Energy consumed by this appliance per day in Wh.
+     */
+    public double energyPerDayWh() {
+        return watts * quantity * hoursPerDay;
+    }
 
+    /**
+     * NEW: Calculate individual system requirements for this appliance
+     */
+    public double calculateRequiredPvWatts(SolarCalculator calc) {
+        double totalWh = energyPerDayWh();
+        return calc.requiredPvWatts(totalWh, peakSunHours);
+    }
+
+    public double calculateRequiredBatteryAh(SolarCalculator calc) {
+        double totalWh = energyPerDayWh();
+        return calc.requiredBatteryAh(totalWh, daysOfAutonomy, depthOfDischarge, systemVoltage);
+    }
+
+    public double calculateRequiredInverterW(SolarCalculator calc) {
+        return calc.recommendedInverterW(watts * quantity);
+    }
+
+    public double calculateRequiredControllerA(SolarCalculator calc) {
+        double pvWatts = calculateRequiredPvWatts(calc);
+        return calc.recommendedControllerA(pvWatts, systemVoltage);
+    }
 }
