@@ -163,5 +163,45 @@ public class ApplianceListPanel {
             }
         });
     }
+    private JPanel createActionPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setOpaque(false);
 
+        deleteBtn = createModernButton("🗑️ Delete Selected (0)", DELETE_COLOR, DELETE_HOVER, true);
+        deleteBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        deleteBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 44));
+        deleteBtn.setEnabled(false);
+        deleteBtn.addActionListener(e -> deleteSelectedAppliances());
+
+        JPanel navPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 12, 0));
+        navPanel.setOpaque(false);
+        navPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+
+        JButton backBtn = createModernButton("← Back to Add Appliances", BACK_COLOR, BACK_HOVER, false);
+        backBtn.addActionListener(e -> mainPage.showLoadInputPanel());
+
+        navPanel.add(backBtn);
+
+        panel.add(deleteBtn);
+        panel.add(Box.createVerticalStrut(15));
+        panel.add(navPanel);
+
+        return panel;
+    }
+
+    private void updateDeleteButton() {
+        if (deleteBtn == null) return; // ✅ Prevent crash if not yet initialized
+
+        int selectedCount = checkedIndices.size();
+        if (selectedCount > 0) {
+            deleteBtn.setEnabled(true);
+            deleteBtn.setText("🗑️ Delete Selected (" + selectedCount + ")");
+            deleteBtn.setForeground(DELETE_COLOR);
+        } else {
+            deleteBtn.setEnabled(false);
+            deleteBtn.setText("🗑️ Delete Selected (0)");
+            deleteBtn.setForeground(new Color(156, 163, 175));
+        }
+    }
 }
