@@ -321,4 +321,21 @@ public class ApplianceListPanel {
             add(leftPanel, BorderLayout.CENTER);
             add(energyLabel, BorderLayout.EAST);
         }
+
+        @Override
+        public Component getListCellRendererComponent(JList<? extends Appliance> list,
+                                                      Appliance value, int index,
+                                                      boolean isSelected, boolean cellHasFocus) {
+            nameLabel.setText(value.getName());
+            detailsLabel.setText(String.format("%dW × %d unit(s) • %.1f hrs/day",
+                    (int) value.getWatts(), value.getQuantity(), value.getHoursPerDay()));
+
+            double dailyWh = value.getWatts() * value.getQuantity() * value.getHoursPerDay();
+            energyLabel.setText(String.format("%.0f Wh/day", dailyWh));
+
+            selectionBox.setSelected(checkedIndices.contains(index));
+            setBackground(checkedIndices.contains(index) ? SELECTED_BG : CARD_BG);
+            return this;
+        }
+    }
 }
