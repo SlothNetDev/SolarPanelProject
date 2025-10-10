@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add UI framework with MainPage and core navigation structure">
-      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/WelcomePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/MainApp/SolarApp.form" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/MainApp/SolarApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/WelcomPage.java" beforeDir="false" />
-    </list>
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,6 +54,7 @@
     "Application.SolarPanel.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "AddBranch",
     "kotlin-language-version-configured": "true",
@@ -153,7 +149,87 @@
       <option name="project" value="LOCAL" />
       <updated>1760063564482</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="refactor: Rename package from MainApp to Main for consistency">
+      <option name="closed" value="true" />
+      <created>1760063781364</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063781364</updated>
+    </task>
+    <task id="LOCAL-00011" summary="refactor: Rename WelcomPage to WelcomePanel and enhance UI with modern design and functionality">
+      <option name="closed" value="true" />
+      <created>1760063818903</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063818903</updated>
+    </task>
+    <task id="LOCAL-00012" summary="refactor: Update form bindings and rename package from MainApp to Main for consistency">
+      <option name="closed" value="true" />
+      <created>1760063824574</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063824574</updated>
+    </task>
+    <task id="LOCAL-00013" summary="refactor: Update form bindings and rename package from MainApp to Main for consistency">
+      <option name="closed" value="true" />
+      <created>1760063897439</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063897439</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat: Add LoadInputPanel with appliance form and enhanced UI components">
+      <option name="closed" value="true" />
+      <created>1760063954108</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063954108</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat: Add LoadInputPanel with appliance form and enhanced UI components">
+      <option name="closed" value="true" />
+      <created>1760063967424</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063967424</updated>
+    </task>
+    <task id="LOCAL-00016" summary="feat: Add LoadInputPanel with appliance form and enhanced UI components">
+      <option name="closed" value="true" />
+      <created>1760063981681</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063981681</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: Add modern button component and appliance input handling in LoadInputPanel">
+      <option name="closed" value="true" />
+      <created>1760063997423</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063997423</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat: Add modern button component and appliance input handling in LoadInputPanel">
+      <option name="closed" value="true" />
+      <created>1760064015538</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1760064015538</updated>
+    </task>
+    <task id="LOCAL-00019" summary="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel">
+      <option name="closed" value="true" />
+      <created>1760064068165</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1760064068165</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -177,6 +253,17 @@
     <MESSAGE value="feat: Add validation and setters for SolarCalculator configuration parameters" />
     <MESSAGE value="feat: Add core solar calculations to SolarCalculator, including PV, battery, and inverter sizing" />
     <MESSAGE value="feat: Add UI framework with MainPage and core navigation structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add UI framework with MainPage and core navigation structure" />
+    <MESSAGE value="feat: Add WelcomePanel and refactor MainApp structure for improved UI navigation" />
+    <MESSAGE value="refactor: Rename package from MainApp to Main for consistency" />
+    <MESSAGE value="feat: Add WelcomePanel with enhanced UI for entry screen and update form binding to Main package" />
+    <MESSAGE value="feat: Add WelcomePanel with enhanced UI for app entry and update package structure" />
+    <MESSAGE value="feat: Replace WelcomPage with WelcomePanel and improve UI/UX for entry screen" />
+    <MESSAGE value="feat: Replace WelcomePage with redesigned WelcomePanel for improved UI and interactivity" />
+    <MESSAGE value="refactor: Rename WelcomPage to WelcomePanel and enhance UI with modern design and functionality" />
+    <MESSAGE value="refactor: Update form bindings and rename package from MainApp to Main for consistency" />
+    <MESSAGE value="feat: Add LoadInputPanel with appliance form and enhanced UI components" />
+    <MESSAGE value="feat: Add modern button component and appliance input handling in LoadInputPanel" />
+    <MESSAGE value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
   </component>
 </project>

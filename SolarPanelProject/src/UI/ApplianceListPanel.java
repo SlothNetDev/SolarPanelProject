@@ -1,4 +1,47 @@
 package UI;
+import Model.Appliance;
+import javax.swing.*;
+import javax.swing.border.AbstractBorder;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
+import java.util.*;
 
 public class ApplianceListPanel {
+    private static final long serialVersionUID = 1L;
+    private final MainPage mainPage;
+    private final List<Appliance> appliances;
+
+    private DefaultListModel<Appliance> listModel;
+    private JList<Appliance> applianceList;
+    private JButton deleteBtn;
+
+    // Store manually checked indices
+    private final Set<Integer> checkedIndices = new HashSet<>();
+
+    // Modern color palette
+    private static final Color BG_COLOR = new Color(248, 250, 252);
+    private static final Color CARD_BG = Color.WHITE;
+    private static final Color TEXT_PRIMARY = new Color(15, 23, 42);
+    private static final Color TEXT_SECONDARY = new Color(100, 116, 139);
+    private static final Color ACCENT_COLOR = new Color(59, 130, 246);
+    private static final Color DELETE_COLOR = new Color(239, 68, 68);
+    private static final Color DELETE_HOVER = new Color(220, 38, 38);
+    private static final Color BACK_COLOR = new Color(100, 116, 139);
+    private static final Color BACK_HOVER = new Color(71, 85, 105);
+    private static final Color BORDER_COLOR = new Color(226, 232, 240);
+    private static final Color SELECTED_BG = new Color(219, 234, 254);
+
+    public ApplianceListPanel(MainPage mainPage, List<Appliance> appliances) {
+        this.appliances = appliances;
+        this.mainPage = mainPage;
+
+        setLayout(new BorderLayout());
+        setBackground(BG_COLOR);
+
+        JScrollPane mainScroll = new JScrollPane(createMainContent());
+        mainScroll.setBorder(null);
+        mainScroll.getVerticalScrollBar().setUnitIncrement(16);
+        add(mainScroll, BorderLayout.CENTER);
+    }
 }
