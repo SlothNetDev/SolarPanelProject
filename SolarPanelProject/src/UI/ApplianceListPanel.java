@@ -44,4 +44,23 @@ public class ApplianceListPanel {
         mainScroll.getVerticalScrollBar().setUnitIncrement(16);
         add(mainScroll, BorderLayout.CENTER);
     }
+    private JPanel createMainContent() {
+        JPanel wrapper = new JPanel(new GridBagLayout());
+        wrapper.setOpaque(false);
+        wrapper.setBorder(BorderFactory.createEmptyBorder(40, 20, 40, 20));
+
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setOpaque(false);
+        contentPanel.setMaximumSize(new Dimension(700, Integer.MAX_VALUE));
+
+        contentPanel.add(createHeader());
+        contentPanel.add(Box.createVerticalStrut(30));
+        contentPanel.add(createListCard());
+        contentPanel.add(Box.createVerticalStrut(25));
+        contentPanel.add(createActionPanel());
+
+        wrapper.add(contentPanel, new GridBagConstraints());
+        return wrapper;
+    }
 }
