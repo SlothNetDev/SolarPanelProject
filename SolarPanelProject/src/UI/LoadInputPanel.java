@@ -318,4 +318,61 @@ public class LoadInputPanel {
             showError("Please enter valid numbers for Watts, Quantity, and Hours.");
         }
     }
+    private void goToApplianceList() {
+        // ✅ No need to transfer - just navigate
+        mainPage.showApplianceListPanel();
+    }
+
+    private String getFieldValue(JTextField field) {
+        String text = field.getText().trim();
+        if (text.startsWith("e.g.,") || text.isEmpty()) return "";
+        return text;
+    }
+
+    private void clearField(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(new Color(148, 163, 184));
+    }
+
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showWarning(String message) {
+        JOptionPane.showMessageDialog(this, message, "Warning", JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void showSuccess(String message) {
+        JOptionPane.showMessageDialog(this, message, "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private static class RoundedBorder extends javax.swing.border.AbstractBorder {
+        private final Color color;
+        private final int radius;
+
+        RoundedBorder(Color color, int radius) {
+            this.color = color;
+            this.radius = radius;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setColor(color);
+            g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+            g2d.dispose();
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(1, 1, 1, 1);
+        }
+
+        @Override
+        public Insets getBorderInsets(Component c, Insets insets) {
+            insets.left = insets.right = insets.top = insets.bottom = 1;
+            return insets;
+        }
+    }
 }
