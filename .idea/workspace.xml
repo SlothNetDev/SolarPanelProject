@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Adding the parameters and constructor to the Appliance.java for Model" />
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add default configuration values to SolarCalculator for improved accuracy" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +84,39 @@
       <option name="project" value="LOCAL" />
       <updated>1760062705454</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: Adding the validator for solar parameters which will be included">
+      <option name="closed" value="true" />
+      <created>1760062863112</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1760062863112</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: Add getters and setters for Appliance fields, including solar parameters">
+      <option name="closed" value="true" />
+      <created>1760062931840</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1760062931840</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: Add initial SolarCalculator class to Model package">
+      <option name="closed" value="true" />
+      <created>1760062974793</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1760062974793</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: Add default configuration values to SolarCalculator for improved accuracy">
+      <option name="closed" value="true" />
+      <created>1760063048285</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1760063048285</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -100,6 +132,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: Adding the parameters and constructor to the Appliance.java for Model" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Adding the parameters and constructor to the Appliance.java for Model" />
+    <MESSAGE value="feat: Adding the validator for solar parameters which will be included" />
+    <MESSAGE value="feat: Adding the  GE" />
+    <MESSAGE value="feat: Add getters and setters for Appliance fields, including solar parameters" />
+    <MESSAGE value="feat: Add initial SolarCalculator class to Model package" />
+    <MESSAGE value="feat: Add default configuration values to SolarCalculator for improved accuracy" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add default configuration values to SolarCalculator for improved accuracy" />
   </component>
 </project>
