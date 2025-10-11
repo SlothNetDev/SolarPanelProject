@@ -303,4 +303,67 @@ public class ApplianceDetailsList {
 
         return panel;
     }
+    private JPanel createFormCard() {
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setBackground(CARD_BACKGROUND);
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(BORDER_COLOR, 1, true),
+                BorderFactory.createEmptyBorder(30, 40, 30, 40)
+        ));
+        card.setMaximumSize(new Dimension(500, Integer.MAX_VALUE));
+        return card;
+    }
+
+    private JPanel createFormField(String labelText, JComponent inputComponent, String placeholder) {
+        JPanel fieldPanel = new JPanel(new BorderLayout(0, 8));
+        fieldPanel.setOpaque(false);
+        fieldPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
+
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        label.setForeground(new Color(51, 65, 85));
+
+        if (inputComponent instanceof JTextField) {
+            JTextField textField = (JTextField) inputComponent;
+            textField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            textField.setHorizontalAlignment(JTextField.CENTER); // Center align text
+            textField.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(203, 213, 225), 1, true),
+                    BorderFactory.createEmptyBorder(8, 12, 8, 12)
+            ));
+            textField.setPreferredSize(new Dimension(0, 38));
+
+            if (placeholder != null) {
+                textField.setForeground(Color.GRAY);
+                textField.setText(placeholder);
+                textField.addFocusListener(new java.awt.event.FocusAdapter() {
+                    public void focusGained(java.awt.event.FocusEvent evt) {
+                        if (textField.getText().equals(placeholder)) {
+                            textField.setText("");
+                            textField.setForeground(Color.BLACK);
+                        }
+                    }
+                    public void focusLost(java.awt.event.FocusEvent evt) {
+                        if (textField.getText().isEmpty()) {
+                            textField.setForeground(Color.GRAY);
+                            textField.setText(placeholder);
+                        }
+                    }
+                });
+            }
+        } else if (inputComponent instanceof JComboBox) {
+            JComboBox<?> comboBox = (JComboBox<?>) inputComponent;
+            comboBox.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+            comboBox.setPreferredSize(new Dimension(0, 38));
+            comboBox.setBackground(Color.WHITE);
+            // Center align combo box text too
+            ((JLabel) comboBox.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        }
+
+        fieldPanel.add(label, BorderLayout.NORTH);
+        fieldPanel.add(inputComponent, BorderLayout.CENTER);
+
+        return fieldPanel;
+    }
 }
