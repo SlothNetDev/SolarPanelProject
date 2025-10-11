@@ -969,4 +969,62 @@ public class ApplianceDetailsList {
         resultsCard.revalidate();
         resultsCard.repaint();
     }
+    /**
+     * Parses the analysis string for color tags and creates a styled JPanel for the line.
+     */
+    private JPanel createStyledAnalysisPanel(String rawLine, Color redBG, Color yellowBG, Color greenBG, Color primaryFG, Color whiteFG) {
+        JPanel linePanel = new JPanel(new BorderLayout());
+
+        Color bgColor = resultsCard.getBackground(); // Default background
+        Color fgColor = primaryFG;                 // Default foreground
+        int fontStyle = Font.PLAIN;
+
+        String content = rawLine;
+
+        // --- 1. Check for Color Tags ---
+        if (rawLine.contains("[RED]")) {
+            bgColor = redBG;
+            fgColor = whiteFG;
+            content = rawLine.replace("[RED]", "").replace("[/RED]", "");
+        } else if (rawLine.contains("[YELLOW]")) {
+            bgColor = yellowBG;
+            fgColor = primaryFG; // Black text on yellow background
+            content = rawLine.replace("[YELLOW]", "").replace("[/YELLOW]", "");
+        } else if (rawLine.contains("[GREEN]")) {
+            bgColor = greenBG;
+            fgColor = whiteFG;
+            content = rawLine.replace("[GREEN]", "").replace("[/GREEN]", "");
+        }
+
+        // --- 2. Check for Bold Tags (e.g., **Very Low Load**) ---
+        if (content.contains("**")) {
+            // Simple heuristic: If the whole line is meant to be bold (like the main recommendation)
+            fontStyle = Font.BOLD;
+            content = content.replace("**", ""); // Remove markdown stars
+        }
+
+        // --- 3. Set Panel and Label Style ---
+        linePanel.setBackground(bgColor);
+
+        JLabel analysisLine = new JLabel(content);
+        analysisLine.setFont(new Font("Segoe UI", fontStyle, 13));
+        analysisLine.setForeground(fgColor);
+
+        // Add margin/padding to the panel, not the label
+        linePanel.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+
+        // Adjust indentation for bullet points/lists
+        if (content.trim().startsWith("•")) {
+            // Use a slight right-alignment to give space for the bullet
+            linePanel.setBorder(BorderFactory.createEmptyBorder(3, 15, 3, 15));
+        } else if (content.trim().startsWith("-")) {
+            // Deeper indentation for sub-points
+            linePanel.setBorder(BorderFactory.createEmptyBorder(2, 30, 2, 15));
+        }
+
+        linePanel.add(analysisLine, BorderLayout.WEST);
+
+        return linePanel;
+    }
+
 }
