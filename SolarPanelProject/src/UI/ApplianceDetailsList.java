@@ -158,5 +158,46 @@ public class ApplianceDetailsList {
             originalSolarData = pshField.getText() + dodField.getText() + daysField.getText() + voltageCombo.getSelectedItem();
         }
     }
+    private void checkForChanges() {
+        if (nameField == null || voltageCombo == null) return;
 
+        String currentBasicData = nameField.getText() + wattsField.getText() + qtyField.getText() + hoursField.getText();
+        String currentSolarData = pshField.getText() + dodField.getText() + daysField.getText() + voltageCombo.getSelectedItem();
+
+        hasUnsavedChanges = !currentBasicData.equals(originalBasicData) || !currentSolarData.equals(originalSolarData);
+
+        // Update tab titles to show unsaved changes
+        updateTabTitles();
+    }
+
+    private void updateTabTitles() {
+        if (tabbedPane == null) return;
+
+        String basicTitle = hasUnsavedChanges ? "📝 Basic Details ●" : "📝 Basic Details";
+        String solarTitle = hasUnsavedChanges ? "☀️ Solar Parameters ●" : "☀️ Solar Parameters";
+
+        tabbedPane.setTitleAt(0, basicTitle);
+        tabbedPane.setTitleAt(1, solarTitle);
+    }
+
+    private void promptSaveChanges() {
+        int result = JOptionPane.showConfirmDialog(this,
+                "You have unsaved changes. Would you like to save them now?",
+                "Unsaved Changes Detected",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (result == JOptionPane.YES_OPTION) {
+            if (saveChanges()) {
+                // Changes saved, continue with tab switch
+            } else {
+                // Save failed, stay on current tab
+                tabbedPane.setSelectedIndex(tabbedPane.getSelectedIndex() == 0 ? 0 : 1);
+            }
+        } else {
+            // User chose not to save, discard changes and continue
+            hasUnsavedChanges = false;
+            updateTabTitles();
+        }
+    }
 }
