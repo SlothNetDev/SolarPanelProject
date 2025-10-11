@@ -850,11 +850,123 @@ public class ApplianceDetailsList {
                         writer.println(parts[0].trim() + "," + parts[1].trim());
                     }
                 } else {
-                    // Handle sub-bullet points (e.g., "• Good for RV...")
+                    // Handle sub-bullet points
                     // We use "General" as a fallback category if no specific header is present
                     writer.println("General," + line.trim());
                 }
             }
         }
+    }
+    private void displayWelcomeMessage() {
+        resultsCard.removeAll();
+        resultsCard.add(Box.createVerticalStrut(50));
+
+        JLabel welcomeLabel = new JLabel("Ready for Individual Calculation");
+        welcomeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        welcomeLabel.setForeground(TEXT_SECONDARY);
+        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel instructionLabel = new JLabel("Set solar parameters and click 'Calculate This Appliance'");
+        instructionLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        instructionLabel.setForeground(TEXT_SECONDARY);
+        instructionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        resultsCard.add(welcomeLabel);
+        resultsCard.add(Box.createVerticalStrut(10));
+        resultsCard.add(instructionLabel);
+
+        resultsCard.revalidate();
+        resultsCard.repaint();
+    }
+
+    private void updateResultsDisplay(String rawText) {
+        resultsCard.removeAll();
+
+        // --- Define Aesthetic Colors
+        final Color CARD_HEADER_BG = new Color(59, 130, 246, 15); // Light Blue
+        final Color ANALYSIS_RED_BG = new Color(220, 53, 69);     // Vibrant Red
+        final Color ANALYSIS_YELLOW_BG = new Color(255, 193, 7);   // Vibrant Yellow
+        final Color ANALYSIS_GREEN_BG = new Color(40, 167, 69);   // Vibrant Green
+        final Color TEXT_PRIMARY = new Color(33, 37, 41);         // Dark Gray Text
+        final Color TEXT_WHITE = Color.WHITE;
+
+        // Add results header
+        JPanel resultsHeader = new JPanel(new BorderLayout());
+        resultsHeader.setBackground(CARD_HEADER_BG);
+        resultsHeader.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(229, 231, 235)),
+                BorderFactory.createEmptyBorder(15, 20, 15, 20)
+        ));
+
+        JLabel summaryLabel = new JLabel("Individual Appliance Analysis - " + appliance.getName());
+        summaryLabel.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        summaryLabel.setForeground(PRIMARY_COLOR); // Assuming PRIMARY_COLOR is defined elsewhere
+
+        resultsHeader.add(summaryLabel, BorderLayout.WEST);
+        resultsCard.add(resultsHeader);
+
+        // Parse and display formatted results
+        String[] lines = rawText.split("\n");
+        resultsCard.add(Box.createVerticalStrut(10));
+
+        boolean mainMetricsDisplayed = false;
+        boolean analysisSection = false;
+
+        for (String line : lines) {
+            if (line.contains("=== SYSTEM ANALYSIS ===")) {
+                analysisSection = true;
+                addSectionHeader("System Analysis & Recommendations");
+                continue;
+            }
+
+            if (analysisSection) {
+                if (line.startsWith("---")) {
+                    // New header style for the analysis sub-sections
+                    addSectionHeader(line.replace("---", "").trim());
+                } else if (!line.trim().isEmpty()) {
+                    // Call the new styling helper method
+                    JPanel analysisPanel = createStyledAnalysisPanel(
+                            line,
+                            ANALYSIS_RED_BG, ANALYSIS_YELLOW_BG, ANALYSIS_GREEN_BG,
+                            TEXT_PRIMARY, TEXT_WHITE
+                    );
+
+                    if (analysisPanel != null) {
+                        analysisPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                        resultsCard.add(analysisPanel);
+                    }
+                } else {
+                    resultsCard.add(Box.createVerticalStrut(5));
+                }
+
+            } else if (line.contains(":")) {
+                String[] parts = line.split(":");
+                if (parts.length == 2) {
+                    String label = parts[0].trim();
+                    String value = parts[1].trim();
+
+                    if (isMainMetric(label)) {
+                        if (!mainMetricsDisplayed) {
+                            addSectionHeader("Required Components");
+                            mainMetricsDisplayed = true;
+                        }
+                        JPanel metricPanel = createMetricPanel(label, value);
+                        resultsCard.add(metricPanel);
+                        resultsCard.add(Box.createVerticalStrut(8));
+                    } else if (isInputParameter(label)) {
+                        if (!analysisSection) {
+                            addSectionHeader("Input Parameters");
+                            analysisSection = true; // Use a different flag if necessary
+                        }
+                        JPanel paramPanel = createParameterPanel(label, value);
+                        resultsCard.add(paramPanel);
+                        resultsCard.add(Box.createVerticalStrut(5));
+                    }
+                }
+            }
+        }
+
+        resultsCard.revalidate();
+        resultsCard.repaint();
     }
 }
