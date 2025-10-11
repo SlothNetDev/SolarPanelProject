@@ -1,0 +1,122 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"7c8e6d23-fc08-47a8-abe7-51d5ed18ad25\" name=\"Changes\" comment=\"refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"Main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"SlothNetDev\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/SlothNetDev/SolarPanelProject.git\",\r\n    \"accountId\": \"0fb9ba48-3abd-4f74-a4f4-6d2e51e85139\"\r\n  }\r\n}]]></component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"33qsN6zjjZ7zn6U24IyUpOkFuNU\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.SolarApp.executor\": \"Run\",\r\n    \"Application.SolarPanel.executor\": \"Run\",\r\n    \"ModuleVcsDetector.initialDetectionPerformed\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"deletionFromPopupRequiresConfirmation\": \"false\",\r\n    \"git-widget-placeholder\": \"AddBranch\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/jervi/Downloads/SolarPanelProject\",\r\n    \"settings.editor.selected.configurable\": \"preferences.keymap\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"7c8e6d23-fc08-47a8-abe7-51d5ed18ad25\" name=\"Changes\" comment=\"\" />\r\n      <created>1760055893993</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1760055893993</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"feat: Adding the parameters and constructor to the Appliance.java for Model\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760062705454</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760062705454</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"feat: Adding the validator for solar parameters which will be included\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760062863112</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760062863112</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"feat: Add getters and setters for Appliance fields, including solar parameters\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760062931840</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760062931840</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"feat: Add initial SolarCalculator class to Model package\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760062974793</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760062974793</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"feat: Add default configuration values to SolarCalculator for improved accuracy\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063048285</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063048285</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"feat: Add validation and setters for SolarCalculator configuration parameters\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063085794</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063085794</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"feat: Add core solar calculations to SolarCalculator, including PV, battery, and inverter sizing\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063286384</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063286384</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"feat: Add core solar calculations to SolarCalculator, including PV, battery, and inverter sizing\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063322347</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063322347</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"feat: Add UI framework with MainPage and core navigation structure\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063564482</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063564482</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"refactor: Rename package from MainApp to Main for consistency\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063781364</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063781364</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"refactor: Rename WelcomPage to WelcomePanel and enhance UI with modern design and functionality\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063818903</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063818903</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"refactor: Update form bindings and rename package from MainApp to Main for consistency\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063824574</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063824574</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"refactor: Update form bindings and rename package from MainApp to Main for consistency\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063897439</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063897439</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"feat: Add LoadInputPanel with appliance form and enhanced UI components\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063954108</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063954108</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"feat: Add LoadInputPanel with appliance form and enhanced UI components\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063967424</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063967424</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"feat: Add LoadInputPanel with appliance form and enhanced UI components\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063981681</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063981681</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"feat: Add modern button component and appliance input handling in LoadInputPanel\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760063997423</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760063997423</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"feat: Add modern button component and appliance input handling in LoadInputPanel\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760064015538</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760064015538</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00019\" summary=\"refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1760064068165</created>\r\n      <option name=\"number\" value=\"00019\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1760064068165</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"20\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"feat: Adding the parameters and constructor to the Appliance.java for Model\" />\r\n    <MESSAGE value=\"feat: Adding the validator for solar parameters which will be included\" />\r\n    <MESSAGE value=\"feat: Adding the  GE\" />\r\n    <MESSAGE value=\"feat: Add getters and setters for Appliance fields, including solar parameters\" />\r\n    <MESSAGE value=\"feat: Add initial SolarCalculator class to Model package\" />\r\n    <MESSAGE value=\"feat: Add default configuration values to SolarCalculator for improved accuracy\" />\r\n    <MESSAGE value=\"feat: Add validation and setters for SolarCalculator configuration parameters\" />\r\n    <MESSAGE value=\"feat: Add core solar calculations to SolarCalculator, including PV, battery, and inverter sizing\" />\r\n    <MESSAGE value=\"feat: Add UI framework with MainPage and core navigation structure\" />\r\n    <MESSAGE value=\"feat: Add WelcomePanel and refactor MainApp structure for improved UI navigation\" />\r\n    <MESSAGE value=\"refactor: Rename package from MainApp to Main for consistency\" />\r\n    <MESSAGE value=\"feat: Add WelcomePanel with enhanced UI for entry screen and update form binding to Main package\" />\r\n    <MESSAGE value=\"feat: Add WelcomePanel with enhanced UI for app entry and update package structure\" />\r\n    <MESSAGE value=\"feat: Replace WelcomPage with WelcomePanel and improve UI/UX for entry screen\" />\r\n    <MESSAGE value=\"feat: Replace WelcomePage with redesigned WelcomePanel for improved UI and interactivity\" />\r\n    <MESSAGE value=\"refactor: Rename WelcomPage to WelcomePanel and enhance UI with modern design and functionality\" />\r\n    <MESSAGE value=\"refactor: Update form bindings and rename package from MainApp to Main for consistency\" />\r\n    <MESSAGE value=\"feat: Add LoadInputPanel with appliance form and enhanced UI components\" />\r\n    <MESSAGE value=\"feat: Add modern button component and appliance input handling in LoadInputPanel\" />\r\n    <MESSAGE value=\"refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision e6b12e616f9703a7e013d3051284d807fb39ca02)
++++ b/.idea/workspace.xml	(date 1760064411737)
+@@ -4,7 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
++    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="refactor: Add proper extension to ApplianceListPanel and improve formatting" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -229,7 +229,87 @@
+       <option name="project" value="LOCAL" />
+       <updated>1760064068165</updated>
+     </task>
+-    <option name="localTasksCounter" value="20" />
++    <task id="LOCAL-00020" summary="feat: Add ApplianceListPanel with modern UI design and scrolling improvements">
++      <option name="closed" value="true" />
++      <created>1760064164197</created>
++      <option name="number" value="00020" />
++      <option name="presentableId" value="LOCAL-00020" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064164197</updated>
++    </task>
++    <task id="LOCAL-00021" summary="feat: Add ApplianceListPanel with modern UI design and scrolling improvements">
++      <option name="closed" value="true" />
++      <created>1760064176446</created>
++      <option name="number" value="00021" />
++      <option name="presentableId" value="LOCAL-00021" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064176446</updated>
++    </task>
++    <task id="LOCAL-00022" summary="feat: Add ApplianceListPanel with modern UI design and scrolling improvements">
++      <option name="closed" value="true" />
++      <created>1760064189845</created>
++      <option name="number" value="00022" />
++      <option name="presentableId" value="LOCAL-00022" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064189845</updated>
++    </task>
++    <task id="LOCAL-00023" summary="feat: Implement detailed appliance list card with interactions and modern design enhancements">
++      <option name="closed" value="true" />
++      <created>1760064206436</created>
++      <option name="number" value="00023" />
++      <option name="presentableId" value="LOCAL-00023" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064206436</updated>
++    </task>
++    <task id="LOCAL-00024" summary="feat: Add action panel with delete and navigation buttons in ApplianceListPanel">
++      <option name="closed" value="true" />
++      <created>1760064223383</created>
++      <option name="number" value="00024" />
++      <option name="presentableId" value="LOCAL-00024" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064223383</updated>
++    </task>
++    <task id="LOCAL-00025" summary="feat: Add action panel with delete and navigation buttons in ApplianceListPanel">
++      <option name="closed" value="true" />
++      <created>1760064240081</created>
++      <option name="number" value="00025" />
++      <option name="presentableId" value="LOCAL-00025" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064240081</updated>
++    </task>
++    <task id="LOCAL-00026" summary="feat: Add action panel with delete and navigation buttons in ApplianceListPanel">
++      <option name="closed" value="true" />
++      <created>1760064252080</created>
++      <option name="number" value="00026" />
++      <option name="presentableId" value="LOCAL-00026" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064252080</updated>
++    </task>
++    <task id="LOCAL-00027" summary="feat: Add action panel with delete and navigation buttons in ApplianceListPanel">
++      <option name="closed" value="true" />
++      <created>1760064269799</created>
++      <option name="number" value="00027" />
++      <option name="presentableId" value="LOCAL-00027" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064269799</updated>
++    </task>
++    <task id="LOCAL-00028" summary="feat: Introduce RoundedBorder for modern UI enhancements in ApplianceListPanel">
++      <option name="closed" value="true" />
++      <created>1760064286271</created>
++      <option name="number" value="00028" />
++      <option name="presentableId" value="LOCAL-00028" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064286271</updated>
++    </task>
++    <task id="LOCAL-00029" summary="refactor: Add proper extension to ApplianceListPanel and improve formatting">
++      <option name="closed" value="true" />
++      <created>1760064334115</created>
++      <option name="number" value="00029" />
++      <option name="presentableId" value="LOCAL-00029" />
++      <option name="project" value="LOCAL" />
++      <updated>1760064334115</updated>
++    </task>
++    <option name="localTasksCounter" value="30" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -264,6 +344,11 @@
+     <MESSAGE value="feat: Add LoadInputPanel with appliance form and enhanced UI components" />
+     <MESSAGE value="feat: Add modern button component and appliance input handling in LoadInputPanel" />
+     <MESSAGE value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
+-    <option name="LAST_COMMIT_MESSAGE" value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
++    <MESSAGE value="feat: Add ApplianceListPanel with modern UI design and scrolling improvements" />
++    <MESSAGE value="feat: Implement detailed appliance list card with interactions and modern design enhancements" />
++    <MESSAGE value="feat: Add action panel with delete and navigation buttons in ApplianceListPanel" />
++    <MESSAGE value="feat: Introduce RoundedBorder for modern UI enhancements in ApplianceListPanel" />
++    <MESSAGE value="refactor: Add proper extension to ApplianceListPanel and improve formatting" />
++    <option name="LAST_COMMIT_MESSAGE" value="refactor: Add proper extension to ApplianceListPanel and improve formatting" />
+   </component>
+ </project>
+\ No newline at end of file
