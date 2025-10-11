@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SolarPanelProject:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SolarPanelProject_jar</output-path>
+    <root id="archive" name="SolarPanelProject.jar">
+      <element id="module-output" name="SolarPanelProject" />
+    </root>
+  </artifact>
+</component>
