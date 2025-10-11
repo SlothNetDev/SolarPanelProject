@@ -200,4 +200,47 @@ public class ApplianceDetailsList {
             updateTabTitles();
         }
     }
+    private JPanel createBasicDetailsPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(BACKGROUND_COLOR);
+
+        JPanel card = createFormCard();
+        card.add(createFormField("🔌 Appliance Name", nameField = new JTextField(), "e.g., LED Light"));
+        card.add(Box.createVerticalStrut(20));
+        card.add(createFormField("⚡ Power (Watts)", wattsField = new JTextField(), "e.g., 10"));
+        card.add(Box.createVerticalStrut(20));
+        card.add(createFormField("🔢 Quantity", qtyField = new JTextField(), "e.g., 2"));
+        card.add(Box.createVerticalStrut(20));
+        card.add(createFormField("⏰ Hours per Day", hoursField = new JTextField(), "e.g., 5.0"));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(card, gbc);
+
+        return panel;
+    }
+
+    private JPanel createSolarParametersPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(BACKGROUND_COLOR);
+
+        JPanel card = createFormCard();
+        card.add(createFormField("☀️ Peak Sun Hours", pshField = new JTextField(), "e.g., 5.0"));
+        card.add(Box.createVerticalStrut(20));
+        card.add(createFormField("🔋 Depth of Discharge (%)", dodField = new JTextField(), "e.g., 50"));
+        card.add(Box.createVerticalStrut(20));
+        card.add(createFormField("📅 Days of Autonomy", daysField = new JTextField(), "e.g., 2"));
+        card.add(Box.createVerticalStrut(20));
+        card.add(createFormField("⚡ System Voltage", voltageCombo = new JComboBox<>(new String[]{"12", "24", "48"}), null));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(card, gbc);
+
+        return panel;
+    }
 }
