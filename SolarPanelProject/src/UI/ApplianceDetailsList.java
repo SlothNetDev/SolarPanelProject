@@ -2,7 +2,7 @@ package UI;
 
 import Model.Appliance;
 import Model.SolarCalculator;
-/*import Utils.ProjectManager;*/
+import Utils.ProjectManager;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.*; // ADD THIS IMPORT for DocumentListener
@@ -20,7 +20,9 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Element;
-public class ApplianceDetailsList {
+
+public class ApplianceDetailsPanel extends JPanel {
+
     private static final long serialVersionUID = 1L;
     private Appliance appliance;
     private MainPage mainPage;
@@ -60,6 +62,7 @@ public class ApplianceDetailsList {
         storeOriginalData();
         add(createToolbar(), BorderLayout.NORTH);add(createToolbar(), BorderLayout.NORTH);
     }
+
     private void initializeUI() {
         setLayout(new BorderLayout(20, 20));
         setBackground(BACKGROUND_COLOR);
@@ -132,6 +135,7 @@ public class ApplianceDetailsList {
         // Add change listeners to track unsaved changes
         addChangeListeners();
     }
+
     private void addChangeListeners() {
         // Listeners for basic details
         DocumentListener changeListener = new DocumentListener() {
@@ -158,6 +162,7 @@ public class ApplianceDetailsList {
             originalSolarData = pshField.getText() + dodField.getText() + daysField.getText() + voltageCombo.getSelectedItem();
         }
     }
+
     private void checkForChanges() {
         if (nameField == null || voltageCombo == null) return;
 
@@ -200,6 +205,7 @@ public class ApplianceDetailsList {
             updateTabTitles();
         }
     }
+
     private JPanel createBasicDetailsPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(BACKGROUND_COLOR);
@@ -243,6 +249,7 @@ public class ApplianceDetailsList {
 
         return panel;
     }
+
     private JPanel createResultsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(BACKGROUND_COLOR);
@@ -303,6 +310,7 @@ public class ApplianceDetailsList {
 
         return panel;
     }
+
     private JPanel createFormCard() {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -366,6 +374,7 @@ public class ApplianceDetailsList {
 
         return fieldPanel;
     }
+
     private JButton createStyledButton(String text, Color bgColor, Color hoverColor) {
         JButton btn = new JButton(text);
         btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -425,6 +434,7 @@ public class ApplianceDetailsList {
             voltageCombo.setSelectedItem(String.valueOf(appliance.getSystemVoltage()));
         }
     }
+
     private boolean saveChanges() {
         try {
             // Validate basic fields
@@ -489,6 +499,7 @@ public class ApplianceDetailsList {
             return false;
         }
     }
+
     private void calculateThisAppliance() {
         try {
             // Auto-save changes before calculation
@@ -654,6 +665,7 @@ public class ApplianceDetailsList {
 
         return analysis.toString();
     }
+
     private void exportResultsToPDF() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save PDF");
@@ -766,6 +778,7 @@ public class ApplianceDetailsList {
             }
         }
     }
+
     // New wrapper method to handle the exception safely
     private void exportToCSVHandler(File file) {
         try {
@@ -850,13 +863,16 @@ public class ApplianceDetailsList {
                         writer.println(parts[0].trim() + "," + parts[1].trim());
                     }
                 } else {
-                    // Handle sub-bullet points
+                    // Handle sub-bullet points (e.g., "• Good for RV...")
                     // We use "General" as a fallback category if no specific header is present
                     writer.println("General," + line.trim());
                 }
             }
         }
     }
+
+
+
     private void displayWelcomeMessage() {
         resultsCard.removeAll();
         resultsCard.add(Box.createVerticalStrut(50));
@@ -882,7 +898,8 @@ public class ApplianceDetailsList {
     private void updateResultsDisplay(String rawText) {
         resultsCard.removeAll();
 
-        // --- Define Aesthetic Colors
+        // --- Define Aesthetic Colors (Must be defined as constants in your class) ---
+        // Example definitions (adjust as needed for aesthetics):
         final Color CARD_HEADER_BG = new Color(59, 130, 246, 15); // Light Blue
         final Color ANALYSIS_RED_BG = new Color(220, 53, 69);     // Vibrant Red
         final Color ANALYSIS_YELLOW_BG = new Color(255, 193, 7);   // Vibrant Yellow
@@ -920,6 +937,7 @@ public class ApplianceDetailsList {
             }
 
             if (analysisSection) {
+                // ⬇️ MODIFIED ANALYSIS SECTION ⬇️
                 if (line.startsWith("---")) {
                     // New header style for the analysis sub-sections
                     addSectionHeader(line.replace("---", "").trim());
@@ -938,8 +956,10 @@ public class ApplianceDetailsList {
                 } else {
                     resultsCard.add(Box.createVerticalStrut(5));
                 }
+                // ⬆️ END MODIFIED ANALYSIS SECTION ⬆️
 
             } else if (line.contains(":")) {
+                // ... (Existing logic for metrics and parameters remains the same) ...
                 String[] parts = line.split(":");
                 if (parts.length == 2) {
                     String label = parts[0].trim();
@@ -969,6 +989,7 @@ public class ApplianceDetailsList {
         resultsCard.revalidate();
         resultsCard.repaint();
     }
+
     /**
      * Parses the analysis string for color tags and creates a styled JPanel for the line.
      */
@@ -1026,6 +1047,11 @@ public class ApplianceDetailsList {
 
         return linePanel;
     }
+
+    // NOTE: You must ensure helper methods like addSectionHeader, isMainMetric,
+    // createMetricPanel, isInputParameter, and createParameterPanel exist
+    // and are correctly defined in your class.
+
     private boolean isMainMetric(String label) {
         return label.equals("Total Daily Energy") || label.equals("Required PV Array") ||
                 label.equals("Battery Capacity") || label.equals("Inverter Size") ||
@@ -1093,6 +1119,7 @@ public class ApplianceDetailsList {
 
         return panel;
     }
+
     private JPanel createParameterPanel(String label, String value) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(CARD_BACKGROUND);
@@ -1158,6 +1185,7 @@ public class ApplianceDetailsList {
         String text = field.getText().trim();
         return text.startsWith("e.g.,") ? "" : text;
     }
+
     //Save Json
     private JPanel createToolbar() {
         JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
@@ -1186,4 +1214,5 @@ public class ApplianceDetailsList {
         toolbar.add(loadBtn);
         return toolbar;
     }
+
 }
