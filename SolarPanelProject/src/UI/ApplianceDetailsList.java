@@ -243,4 +243,64 @@ public class ApplianceDetailsList {
 
         return panel;
     }
+    private JPanel createResultsPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(BACKGROUND_COLOR);
+
+        // Create export button panel
+        JPanel exportPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        exportPanel.setBackground(BACKGROUND_COLOR);
+        exportPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+
+        // 1. RED EXPORT TO PDF BUTTON (Using the new red colors)
+        JButton exportBtn1 = createStyledButton("📄 Export to PDF", new Color(220, 53, 69), new Color(200, 35, 51));
+        exportBtn1.setPreferredSize(new Dimension(150, 35));
+        exportBtn1.addActionListener(e -> exportResultsToPDF());
+        exportPanel.add(exportBtn1);
+
+        // 2. EXPORT TO CSV BUTTON (Using the original blue color)
+        JButton exportCvs = createStyledButton("📄 Export to CSV", new Color(0, 102, 204), new Color(0, 76, 153));
+        exportCvs.setPreferredSize(new Dimension(150, 35));
+        // Listener now opens the file dialog and calls the handler method
+        exportCvs.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Save CSV");
+            fileChooser.setSelectedFile(new File("SolarCalculator_Results.csv"));
+
+            int userSelection = fileChooser.showSaveDialog(null);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File csvFile = fileChooser.getSelectedFile();
+                exportToCSVHandler(csvFile);
+            }
+        });
+        exportPanel.add(exportCvs);
+
+
+        // Main results content (No changes here)
+        resultsCard = new JPanel();
+        resultsCard.setLayout(new BoxLayout(resultsCard, BoxLayout.Y_AXIS));
+        resultsCard.setBackground(CARD_BACKGROUND);
+        resultsCard.setBorder(BorderFactory.createCompoundBorder(
+                createCardBorder(),
+                BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        ));
+
+        JScrollPane scrollPane = new JScrollPane(resultsCard);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.getViewport().setBackground(CARD_BACKGROUND);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        // Create a wrapper panel for the results content
+        resultsContentPanel = new JPanel(new BorderLayout());
+        resultsContentPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Add components to main panel
+        panel.add(exportPanel, BorderLayout.NORTH);
+        panel.add(resultsContentPanel, BorderLayout.CENTER);
+
+        // Initial message
+        displayWelcomeMessage();
+
+        return panel;
+    }
 }
