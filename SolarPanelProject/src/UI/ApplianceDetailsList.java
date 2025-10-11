@@ -366,4 +366,63 @@ public class ApplianceDetailsList {
 
         return fieldPanel;
     }
+    private JButton createStyledButton(String text, Color bgColor, Color hoverColor) {
+        JButton btn = new JButton(text);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setBackground(bgColor);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setPreferredSize(new Dimension(180, 42));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn.setBackground(hoverColor);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn.setBackground(bgColor);
+            }
+        });
+
+        return btn;
+    }
+
+    private Border createCardBorder() {
+        return BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(229, 231, 235), 1),
+                BorderFactory.createEmptyBorder(0, 0, 0, 0)
+        );
+    }
+
+    private void loadApplianceData() {
+        // Basic details
+        nameField.setText(appliance.getName());
+        wattsField.setText(String.valueOf(appliance.getWatts()));
+        qtyField.setText(String.valueOf(appliance.getQuantity()));
+        hoursField.setText(String.valueOf(appliance.getHoursPerDay()));
+
+        // Solar parameters - only load if they have been set (not default values)
+        if (appliance.getPeakSunHours() != 5.0) {
+            pshField.setText(String.valueOf(appliance.getPeakSunHours()));
+        } else {
+            pshField.setText("e.g., 5.0");
+            pshField.setForeground(Color.GRAY);
+        }
+        if (appliance.getDepthOfDischarge() != 50.0) {
+            dodField.setText(String.valueOf(appliance.getDepthOfDischarge()));
+        } else {
+            dodField.setText("e.g., 50");
+            dodField.setForeground(Color.GRAY);
+        }
+        if (appliance.getDaysOfAutonomy() != 2) {
+            daysField.setText(String.valueOf(appliance.getDaysOfAutonomy()));
+        } else {
+            daysField.setText("e.g., 2");
+            daysField.setForeground(Color.GRAY);
+        }
+        if (appliance.getSystemVoltage() != 12) {
+            voltageCombo.setSelectedItem(String.valueOf(appliance.getSystemVoltage()));
+        }
+    }
 }
