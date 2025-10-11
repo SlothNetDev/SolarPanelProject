@@ -1093,4 +1093,69 @@ public class ApplianceDetailsList {
 
         return panel;
     }
+    private JPanel createParameterPanel(String label, String value) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(CARD_BACKGROUND);
+        panel.setBorder(BorderFactory.createEmptyBorder(8, 10, 8, 10));
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
+
+        JLabel nameLabel = new JLabel("• " + label);
+        nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        nameLabel.setForeground(TEXT_SECONDARY);
+
+        JLabel valueLabel = new JLabel(value);
+        valueLabel.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        valueLabel.setForeground(TEXT_PRIMARY);
+        valueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        panel.add(nameLabel, BorderLayout.WEST);
+        panel.add(valueLabel, BorderLayout.EAST);
+
+        return panel;
+    }
+
+    private String getIconForMetric(String metric) {
+        switch (metric) {
+            case "Total Daily Energy": return "⚡";
+            case "Required PV Array": return "☀️";
+            case "Battery Capacity": return "🔋";
+            case "Inverter Size": return "🔄";
+            case "Charge Controller": return "🎛️";
+            default: return "📊";
+        }
+    }
+
+    private Color getColorForMetric(String metric) {
+        switch (metric) {
+            case "Total Daily Energy": return SUCCESS_COLOR;
+            case "Required PV Array": return WARNING_COLOR;
+            case "Battery Capacity": return PRIMARY_COLOR;
+            case "Inverter Size": return new Color(99, 102, 241);
+            case "Charge Controller": return new Color(239, 68, 68);
+            default: return TEXT_PRIMARY;
+        }
+    }
+
+    private String getUnitForMetric(String metric) {
+        if (metric.contains("Energy")) return "Watt-hours per day";
+        if (metric.contains("PV Array") || metric.contains("Inverter")) return "Watts";
+        if (metric.contains("Battery")) return "Amp-hours";
+        if (metric.contains("Controller")) return "Amps";
+        return "";
+    }
+
+    private String formatValue(String value, String metric) {
+        try {
+            String numericValue = value.replaceAll("[^0-9.,]", "").replace(",", "").trim();
+            double num = Double.parseDouble(numericValue);
+            return num >= 1000 ? df.format(num) : String.format("%.2f", num);
+        } catch (NumberFormatException e) {
+            return value;
+        }
+    }
+
+    private String getFieldValue(JTextField field) {
+        String text = field.getText().trim();
+        return text.startsWith("e.g.,") ? "" : text;
+    }
 }
