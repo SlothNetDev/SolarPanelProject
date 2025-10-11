@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI" />
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="refactor: Rename `ApplianceDetailsList` to `ApplianceDetailsPanel` and update imports, formatting, and comments for consistency">
+      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/Utils/ProjectManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -333,7 +336,63 @@
       <option name="project" value="LOCAL" />
       <updated>1760146400049</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="feat: Add export to CSV functionality with structured data, calculations, and error handling to `ApplianceDetailsList` UI">
+      <option name="closed" value="true" />
+      <created>1760146428717</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146428717</updated>
+    </task>
+    <task id="LOCAL-00033" summary="feat: Add dynamic results display and welcome message to `ApplianceDetailsList` with enhanced UI styling and analysis sections">
+      <option name="closed" value="true" />
+      <created>1760146494878</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146494878</updated>
+    </task>
+    <task id="LOCAL-00034" summary="feat: Add styled analysis panel creation to `ApplianceDetailsList` with color tagging and dynamic text formatting">
+      <option name="closed" value="true" />
+      <created>1760146512060</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146512060</updated>
+    </task>
+    <task id="LOCAL-00035" summary="feat: Add metric panel creation and section headers to `ApplianceDetailsList` with dynamic styling and structured layout">
+      <option name="closed" value="true" />
+      <created>1760146532895</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146532895</updated>
+    </task>
+    <task id="LOCAL-00036" summary="feat: Add helper methods for dynamic metric handling in `ApplianceDetailsList` with icon mapping, color tagging, and value formatting">
+      <option name="closed" value="true" />
+      <created>1760146552175</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146552175</updated>
+    </task>
+    <task id="LOCAL-00037" summary="feat: Add toolbar with save and load project functionality to `ApplianceDetailsList` UI">
+      <option name="closed" value="true" />
+      <created>1760146570450</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146570450</updated>
+    </task>
+    <task id="LOCAL-00038" summary="refactor: Rename `ApplianceDetailsList` to `ApplianceDetailsPanel` and update imports, formatting, and comments for consistency">
+      <option name="closed" value="true" />
+      <created>1760146644294</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146644294</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -348,13 +407,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Add UI framework with MainPage and core navigation structure" />
-    <MESSAGE value="feat: Add WelcomePanel and refactor MainApp structure for improved UI navigation" />
-    <MESSAGE value="refactor: Rename package from MainApp to Main for consistency" />
-    <MESSAGE value="feat: Add WelcomePanel with enhanced UI for entry screen and update form binding to Main package" />
-    <MESSAGE value="feat: Add WelcomePanel with enhanced UI for app entry and update package structure" />
-    <MESSAGE value="feat: Replace WelcomPage with WelcomePanel and improve UI/UX for entry screen" />
-    <MESSAGE value="feat: Replace WelcomePage with redesigned WelcomePanel for improved UI and interactivity" />
     <MESSAGE value="refactor: Rename WelcomPage to WelcomePanel and enhance UI with modern design and functionality" />
     <MESSAGE value="refactor: Update form bindings and rename package from MainApp to Main for consistency" />
     <MESSAGE value="feat: Add LoadInputPanel with appliance form and enhanced UI components" />
@@ -373,6 +425,13 @@
     <MESSAGE value="feat: Add save functionality to `ApplianceDetailsList` with validation, numeric parsing, and error handling" />
     <MESSAGE value="feat: Add calculation functionality to `ApplianceDetailsList` with auto-save, validation, intelligent analysis, and results display" />
     <MESSAGE value="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI" />
+    <MESSAGE value="feat: Add export to CSV functionality with structured data, calculations, and error handling to `ApplianceDetailsList` UI" />
+    <MESSAGE value="feat: Add dynamic results display and welcome message to `ApplianceDetailsList` with enhanced UI styling and analysis sections" />
+    <MESSAGE value="feat: Add styled analysis panel creation to `ApplianceDetailsList` with color tagging and dynamic text formatting" />
+    <MESSAGE value="feat: Add metric panel creation and section headers to `ApplianceDetailsList` with dynamic styling and structured layout" />
+    <MESSAGE value="feat: Add helper methods for dynamic metric handling in `ApplianceDetailsList` with icon mapping, color tagging, and value formatting" />
+    <MESSAGE value="feat: Add toolbar with save and load project functionality to `ApplianceDetailsList` UI" />
+    <MESSAGE value="refactor: Rename `ApplianceDetailsList` to `ApplianceDetailsPanel` and update imports, formatting, and comments for consistency" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: Rename `ApplianceDetailsList` to `ApplianceDetailsPanel` and update imports, formatting, and comments for consistency" />
   </component>
 </project>
