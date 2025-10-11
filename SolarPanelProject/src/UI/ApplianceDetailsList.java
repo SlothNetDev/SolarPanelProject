@@ -60,4 +60,76 @@ public class ApplianceDetailsList {
         storeOriginalData();
         add(createToolbar(), BorderLayout.NORTH);add(createToolbar(), BorderLayout.NORTH);
     }
+    private void initializeUI() {
+        setLayout(new BorderLayout(20, 20));
+        setBackground(BACKGROUND_COLOR);
+        setBorder(BorderFactory.createEmptyBorder(30, 50, 30, 50));
+
+        // Header
+        JLabel header = new JLabel("⚙️ Appliance Details & Solar Parameters", JLabel.CENTER);
+        header.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        header.setForeground(TEXT_PRIMARY);
+        header.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
+        add(header, BorderLayout.NORTH);
+
+        // Create main content with tabs
+        tabbedPane = new JTabbedPane();
+        tabbedPane.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+        tabbedPane.addTab("📝 Basic Details", createBasicDetailsPanel());
+        tabbedPane.addTab("☀️ Solar Parameters", createSolarParametersPanel());
+        tabbedPane.addTab("📊 Results", createResultsPanel());
+
+        // Add tab change listener for auto-save
+        tabbedPane.addChangeListener(e -> {
+            if (hasUnsavedChanges) {
+                promptSaveChanges();
+            }
+        });
+
+        add(tabbedPane, BorderLayout.CENTER);
+
+        // Navigation buttons
+        JPanel navPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
+        navPanel.setOpaque(false);
+        navPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+
+        JButton saveBtn = createStyledButton("💾 Save Changes", SUCCESS_COLOR, new Color(22, 163, 74));
+        JButton calculateBtn = createStyledButton("🔢 Calculate This Appliance", PRIMARY_COLOR, new Color(37, 99, 235));
+        JButton backBtn = createStyledButton("← Back to List", new Color(100, 116, 139), new Color(71, 85, 105));
+
+        navPanel.add(saveBtn);
+        navPanel.add(calculateBtn);
+        navPanel.add(backBtn);
+        add(navPanel, BorderLayout.SOUTH);
+
+        // Load data and set up actions
+        loadApplianceData();
+
+        saveBtn.addActionListener(e -> saveChanges());
+        calculateBtn.addActionListener(e -> calculateThisAppliance());
+        backBtn.addActionListener(e -> {
+            if (hasUnsavedChanges) {
+                int result = JOptionPane.showConfirmDialog(this,
+                        "You have unsaved changes. Do you want to save before leaving?",
+                        "Unsaved Changes",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    if (saveChanges()) {
+                        mainPage.showApplianceListPanel();
+                    }
+                } else if (result == JOptionPane.NO_OPTION) {
+                    mainPage.showApplianceListPanel();
+                }
+                // Cancel - stay on current panel
+            } else {
+                mainPage.showApplianceListPanel();
+            }
+        });
+
+        // Add change listeners to track unsaved changes
+        addChangeListeners();
+    }
 }
