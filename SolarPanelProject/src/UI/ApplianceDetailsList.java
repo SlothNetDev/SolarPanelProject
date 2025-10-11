@@ -766,5 +766,95 @@ public class ApplianceDetailsList {
             }
         }
     }
+    // New wrapper method to handle the exception safely
+    private void exportToCSVHandler(File file) {
+        try {
+            _exportToCSV(file);
+            JOptionPane.showMessageDialog(null,
+                    "✅ Results exported successfully to CSV!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                    "❌ Error exporting CSV: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
+    private void _exportToCSV(File file) throws IOException {
+
+        // Ensure the file has the .csv extension if the user forgot it
+        if (!file.getName().toLowerCase().endsWith(".csv")) {
+            file = new File(file.getAbsolutePath() + ".csv");
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
+            // --- PRE-CALCULATIONS ---
+            double totalWh = appliance.energyPerDayWh();
+            SolarCalculator calc = mainPage.getCalculator();
+            double pvWatts = calc.requiredPvWatts(totalWh, appliance.getPeakSunHours());
+            double batteryAh = calc.requiredBatteryAh(totalWh, appliance.getDaysOfAutonomy(), appliance.getDepthOfDischarge(), appliance.getSystemVoltage());
+            double inverterW = calc.recommendedInverterW(appliance.getWatts() * appliance.getQuantity());
+            double controllerA = calc.recommendedControllerA(pvWatts, appliance.getSystemVoltage());
+            String analysis = generateSystemAnalysis(totalWh, pvWatts, batteryAh, inverterW, controllerA);
+
+
+            // --- WRITE HEADER & BASIC DETAILS ---
+            writer.println("Solar System Calculation Results");
+            writer.println("Appliance:," + appliance.getName());
+            writer.println("Export Date:," + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            writer.println();
+
+            writer.println("BASIC DETAILS");
+            writer.println("Parameter,Value,Unit");
+            writer.println("Appliance Name," + appliance.getName() + ",");
+            writer.println("Power," + appliance.getWatts() + ",Watts");
+            writer.println("Quantity," + appliance.getQuantity() + ",");
+            writer.println("Hours per Day," + appliance.getHoursPerDay() + ",hours");
+            writer.println();
+
+            // --- WRITE SOLAR PARAMETERS ---
+            writer.println("SOLAR PARAMETERS");
+            writer.println("Parameter,Value,Unit");
+            writer.println("Peak Sun Hours," + appliance.getPeakSunHours() + ",hours");
+            writer.println("Depth of Discharge," + appliance.getDepthOfDischarge() + ",%");
+            writer.println("Days of Autonomy," + appliance.getDaysOfAutonomy() + ",days");
+            writer.println("System Voltage," + appliance.getSystemVoltage() + ",V");
+            writer.println();
+
+            // --- WRITE CALCULATION RESULTS ---
+            writer.println("CALCULATION RESULTS");
+            writer.println("Component,Value,Unit");
+
+            writer.println("Total Daily Energy," + String.format("%.2f", totalWh) + ",Wh/day");
+            writer.println("Required PV Array," + String.format("%.2f", pvWatts) + ",W");
+            writer.println("Battery Capacity," + String.format("%.2f", batteryAh) + ",Ah");
+            writer.println("Inverter Size," + String.format("%.2f", inverterW) + ",W");
+            writer.println("Charge Controller," + String.format("%.2f", controllerA) + ",A");
+            writer.println();
+
+            // --- WRITE ANALYSIS SECTION ---
+            writer.println("SYSTEM ANALYSIS");
+            writer.println("Category,Recommendation");
+
+            String[] analysisLines = analysis.split("\n");
+            for (String line : analysisLines) {
+                if (line.trim().isEmpty()) continue;
+
+                // Handle section headers/metrics: e.g., "🔋 ENERGY CONSUMPTION:"
+                if (line.contains(":")) {
+                    String[] parts = line.split(":", 2);
+                    if (parts.length == 2) {
+                        writer.println(parts[0].trim() + "," + parts[1].trim());
+                    }
+                } else {
+                    // Handle sub-bullet points (e.g., "• Good for RV...")
+                    // We use "General" as a fallback category if no specific header is present
+                    writer.println("General," + line.trim());
+                }
+            }
+        }
+    }
 }

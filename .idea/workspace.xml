@@ -9,12 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel">
-      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/MainPage.java" afterDir="false" />
-    </list>
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -66,7 +61,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "Main",
+    "git-widget-placeholder": "AddBranch",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/jervi/Downloads/SolarPanelProject",
     "project.structure.last.edited": "Libraries",
@@ -242,7 +237,103 @@
       <option name="project" value="LOCAL" />
       <updated>1760064068165</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="feat: Add library dependencies and enhance project configuration with artifact settings and updated imports">
+      <option name="closed" value="true" />
+      <created>1760146175885</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146175885</updated>
+    </task>
+    <task id="LOCAL-00021" summary="refactor: Update .idea configurations and shelf patch for improved project metadata tracking">
+      <option name="closed" value="true" />
+      <created>1760146187346</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146187346</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat: Add `ApplianceDetailsList` UI with headers, tabs, navigation buttons, and styled enhancements">
+      <option name="closed" value="true" />
+      <created>1760146215973</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146215973</updated>
+    </task>
+    <task id="LOCAL-00023" summary="feat: Add change listeners and original data storage to `ApplianceDetailsList` for enhanced state tracking">
+      <option name="closed" value="true" />
+      <created>1760146232848</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146232848</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat: Add unsaved changes tracking and prompts to `ApplianceDetailsList` with dynamic tab title updates">
+      <option name="closed" value="true" />
+      <created>1760146250278</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146250278</updated>
+    </task>
+    <task id="LOCAL-00025" summary="feat: Add detailed input panels for appliance and solar parameters in `ApplianceDetailsList` UI">
+      <option name="closed" value="true" />
+      <created>1760146266348</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146266348</updated>
+    </task>
+    <task id="LOCAL-00026" summary="feat: Add export to PDF/CSV functionality and results panel to `ApplianceDetailsList` UI">
+      <option name="closed" value="true" />
+      <created>1760146284712</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146284712</updated>
+    </task>
+    <task id="LOCAL-00027" summary="feat: Add form card and dynamic form field creation to `ApplianceDetailsList` UI">
+      <option name="closed" value="true" />
+      <created>1760146303536</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146303536</updated>
+    </task>
+    <task id="LOCAL-00028" summary="feat: Add styled button creation, card border, and appliance data loading methods to `ApplianceDetailsList` UI">
+      <option name="closed" value="true" />
+      <created>1760146320415</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146320415</updated>
+    </task>
+    <task id="LOCAL-00029" summary="feat: Add save functionality to `ApplianceDetailsList` with validation, numeric parsing, and error handling">
+      <option name="closed" value="true" />
+      <created>1760146339226</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146339226</updated>
+    </task>
+    <task id="LOCAL-00030" summary="feat: Add calculation functionality to `ApplianceDetailsList` with auto-save, validation, intelligent analysis, and results display">
+      <option name="closed" value="true" />
+      <created>1760146379985</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146379985</updated>
+    </task>
+    <task id="LOCAL-00031" summary="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI">
+      <option name="closed" value="true" />
+      <created>1760146400049</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146400049</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -257,14 +348,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Adding the parameters and constructor to the Appliance.java for Model" />
-    <MESSAGE value="feat: Adding the validator for solar parameters which will be included" />
-    <MESSAGE value="feat: Adding the  GE" />
-    <MESSAGE value="feat: Add getters and setters for Appliance fields, including solar parameters" />
-    <MESSAGE value="feat: Add initial SolarCalculator class to Model package" />
-    <MESSAGE value="feat: Add default configuration values to SolarCalculator for improved accuracy" />
-    <MESSAGE value="feat: Add validation and setters for SolarCalculator configuration parameters" />
-    <MESSAGE value="feat: Add core solar calculations to SolarCalculator, including PV, battery, and inverter sizing" />
     <MESSAGE value="feat: Add UI framework with MainPage and core navigation structure" />
     <MESSAGE value="feat: Add WelcomePanel and refactor MainApp structure for improved UI navigation" />
     <MESSAGE value="refactor: Rename package from MainApp to Main for consistency" />
@@ -277,6 +360,19 @@
     <MESSAGE value="feat: Add LoadInputPanel with appliance form and enhanced UI components" />
     <MESSAGE value="feat: Add modern button component and appliance input handling in LoadInputPanel" />
     <MESSAGE value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
+    <MESSAGE value="refactor: Add proper extension to ApplianceListPanel and improve formatting" />
+    <MESSAGE value="feat: Add library dependencies and enhance project configuration with artifact settings and updated imports" />
+    <MESSAGE value="refactor: Update .idea configurations and shelf patch for improved project metadata tracking" />
+    <MESSAGE value="feat: Add `ApplianceDetailsList` UI with headers, tabs, navigation buttons, and styled enhancements" />
+    <MESSAGE value="feat: Add change listeners and original data storage to `ApplianceDetailsList` for enhanced state tracking" />
+    <MESSAGE value="feat: Add unsaved changes tracking and prompts to `ApplianceDetailsList` with dynamic tab title updates" />
+    <MESSAGE value="feat: Add detailed input panels for appliance and solar parameters in `ApplianceDetailsList` UI" />
+    <MESSAGE value="feat: Add export to PDF/CSV functionality and results panel to `ApplianceDetailsList` UI" />
+    <MESSAGE value="feat: Add form card and dynamic form field creation to `ApplianceDetailsList` UI" />
+    <MESSAGE value="feat: Add styled button creation, card border, and appliance data loading methods to `ApplianceDetailsList` UI" />
+    <MESSAGE value="feat: Add save functionality to `ApplianceDetailsList` with validation, numeric parsing, and error handling" />
+    <MESSAGE value="feat: Add calculation functionality to `ApplianceDetailsList` with auto-save, validation, intelligent analysis, and results display" />
+    <MESSAGE value="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI" />
   </component>
 </project>
