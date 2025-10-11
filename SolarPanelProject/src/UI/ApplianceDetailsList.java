@@ -1026,5 +1026,71 @@ public class ApplianceDetailsList {
 
         return linePanel;
     }
+    private boolean isMainMetric(String label) {
+        return label.equals("Total Daily Energy") || label.equals("Required PV Array") ||
+                label.equals("Battery Capacity") || label.equals("Inverter Size") ||
+                label.equals("Charge Controller");
+    }
 
+    private boolean isInputParameter(String label) {
+        return label.equals("System Voltage") || label.equals("Peak Sun Hours") ||
+                label.equals("Depth of Discharge") || label.equals("Days of Autonomy");
+    }
+
+    private void addSectionHeader(String title) {
+        resultsCard.add(Box.createVerticalStrut(20));
+
+        JLabel header = new JLabel(title);
+        header.setFont(new Font("Segoe UI Semibold", Font.BOLD, 16));
+        header.setForeground(TEXT_PRIMARY);
+        header.setAlignmentX(Component.LEFT_ALIGNMENT);
+        header.setBorder(BorderFactory.createEmptyBorder(5, 0, 10, 0));
+
+        resultsCard.add(header);
+
+        JSeparator separator = new JSeparator();
+        separator.setForeground(new Color(229, 231, 235));
+        separator.setMaximumSize(new Dimension(Integer.MAX_VALUE, 1));
+        separator.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        resultsCard.add(separator);
+        resultsCard.add(Box.createVerticalStrut(10));
+    }
+
+    private JPanel createMetricPanel(String label, String value) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(CARD_BACKGROUND);
+        panel.setBorder(BorderFactory.createEmptyBorder(12, 0, 12, 0));
+        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
+
+        JLabel nameLabel = new JLabel(getIconForMetric(label) + " " + label);
+        nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        nameLabel.setForeground(TEXT_SECONDARY);
+
+        JLabel valueLabel = new JLabel(formatValue(value, label));
+        valueLabel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
+        valueLabel.setForeground(getColorForMetric(label));
+        valueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        String unit = getUnitForMetric(label);
+        if (!unit.isEmpty()) {
+            JLabel unitLabel = new JLabel(unit);
+            unitLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            unitLabel.setForeground(TEXT_SECONDARY);
+            unitLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
+            JPanel valuePanel = new JPanel(new BorderLayout());
+            valuePanel.setBackground(CARD_BACKGROUND);
+            valuePanel.add(valueLabel, BorderLayout.CENTER);
+            valuePanel.add(unitLabel, BorderLayout.SOUTH);
+
+            panel.add(nameLabel, BorderLayout.WEST);
+            panel.add(valuePanel, BorderLayout.EAST);
+        } else {
+            panel.add(nameLabel, BorderLayout.WEST);
+            panel.add(valueLabel, BorderLayout.EAST);
+        }
+
+        return panel;
+    }
 }
