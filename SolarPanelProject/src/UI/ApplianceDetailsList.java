@@ -489,4 +489,169 @@ public class ApplianceDetailsList {
             return false;
         }
     }
+    private void calculateThisAppliance() {
+        try {
+            // Auto-save changes before calculation
+            if (hasUnsavedChanges) {
+                int result = JOptionPane.showConfirmDialog(this,
+                        "Save changes before calculating?",
+                        "Unsaved Changes",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    if (!saveChanges()) {
+                        return; // Save failed, don't proceed with calculation
+                    }
+                }
+            }
+
+            // Validate that solar parameters are set
+            String pshText = getFieldValue(pshField);
+            String dodText = getFieldValue(dodField);
+            String daysText = getFieldValue(daysField);
+
+            if (pshText.isEmpty() || dodText.isEmpty() || daysText.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Please set all solar parameters in the 'Solar Parameters' tab before calculating.",
+                        "Missing Solar Parameters",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Perform calculation using the appliance's solar parameters
+            SolarCalculator calc = mainPage.getCalculator();
+
+            double totalWh = appliance.energyPerDayWh();
+            double pvWatts = calc.requiredPvWatts(totalWh, appliance.getPeakSunHours());
+            double batteryAh = calc.requiredBatteryAh(totalWh, appliance.getDaysOfAutonomy(),
+                    appliance.getDepthOfDischarge(), appliance.getSystemVoltage());
+            double inverterW = calc.recommendedInverterW(appliance.getWatts() * appliance.getQuantity());
+            double controllerA = calc.recommendedControllerA(pvWatts, appliance.getSystemVoltage());
+
+            // Generate intelligent analysis
+            String analysis = generateSystemAnalysis(totalWh, pvWatts, batteryAh, inverterW, controllerA);
+
+            // Format results
+            String resultsText = String.format(
+                    "Total Daily Energy: %.2f\n" +
+                            "Required PV Array: %.2f\n" +
+                            "Battery Capacity: %.2f\n" +
+                            "Inverter Size: %.2f\n" +
+                            "Charge Controller: %.2f\n" +
+                            "System Voltage: %d\n" +
+                            "Peak Sun Hours: %.1f\n" +
+                            "Depth of Discharge: %.1f\n" +
+                            "Days of Autonomy: %d\n" +
+                            "=== SYSTEM ANALYSIS ===\n%s",
+                    totalWh, pvWatts, batteryAh, inverterW, controllerA,
+                    appliance.getSystemVoltage(), appliance.getPeakSunHours(),
+                    appliance.getDepthOfDischarge(), appliance.getDaysOfAutonomy(),
+                    analysis
+            );
+
+            // Update the results display and AUTO-REDIRECT to results tab
+            updateResultsDisplay(resultsText);
+            tabbedPane.setSelectedIndex(2); // Switch to Results tab
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error calculating: " + ex.getMessage(),
+                    "Calculation Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private String generateSystemAnalysis(double totalWh, double pvWatts, double batteryAh, double inverterW, double controllerA) {
+        StringBuilder analysis = new StringBuilder();
+
+        // --- Helper for formatting based on color ---
+        // NOTE: Your UI must parse these tags: [RED], [YELLOW], [GREEN]
+        var format = new Object() {
+            String tag(String text, String color) {
+                return String.format("[%s]%s[/%s]", color, text, color);
+            }
+        };
+
+        // --- Energy Consumption Analysis ---
+        analysis.append("--- 🔋 ENERGY DEMAND ---\n");
+        if (totalWh < 500) {
+            analysis.append(format.tag("• **Very Low Load:** Ideal for small devices. Perfect for portable or small off-grid kits.", "GREEN") + "\n");
+        } else if (totalWh < 2000) {
+            analysis.append(format.tag("• **Moderate Load:** Suitable for small appliances. Excellent for RV, camping, or small cabin systems.", "YELLOW") + "\n");
+        } else if (totalWh < 5000) {
+            analysis.append(format.tag("• **High Load:** Can power multiple appliances simultaneously. Suitable for home office or small household use.", "YELLOW") + "\n");
+        } else {
+            analysis.append(format.tag("• **Heavy Load:** Requires a robust, high-capacity system. Ideal for full residential or commercial applications.", "RED") + "\n");
+        }
+
+        // --- Solar Panel Analysis ---
+        analysis.append("\n--- ☀️ PV ARRAY SIZING ---\n");
+        if (pvWatts < 300) {
+            analysis.append(format.tag("• **Small Array:** Equivalent to 1-2 standard 300W panels. Easy installation.", "GREEN") + "\n");
+        } else if (pvWatts < 1000) {
+            analysis.append(format.tag("• **Medium Array:** Requires 3-4 panels. Suitable for most standard residential rooftops.", "YELLOW") + "\n");
+        } else {
+            analysis.append(format.tag("• **Large Array:** Requires professional installation planning. Consider split arrays for optimized exposure.", "RED") + "\n");
+        }
+
+        // --- Battery System Analysis ---
+        analysis.append("\n--- ⚡ BATTERY STORAGE ---\n");
+        analysis.append(String.format("• **Capacity:** %.0f Ah required for %d days of autonomy.\n", batteryAh, appliance.getDaysOfAutonomy()));
+
+        if (batteryAh < 150 && appliance.getDepthOfDischarge() <= 50) {
+            analysis.append(format.tag("• **System Type:** Small, daily-cycling setup. AGM or basic Lithium recommended.", "GREEN") + "\n");
+        } else if (batteryAh < 500) {
+            analysis.append(format.tag("• **System Type:** Medium bank for extended use. Lithium (LiFePO4) is strongly recommended.", "YELLOW") + "\n");
+        } else {
+            analysis.append(format.tag("• **System Type:** Large backup bank. Professional battery management system (BMS) is essential.", "RED") + "\n");
+        }
+
+        // --- Inverter Analysis ---
+        analysis.append("\n--- 🔌 INVERTER SELECTION ---\n");
+        analysis.append(String.format("• **Required Size:** %.0f W (Includes 25%% safety overhead).\n", inverterW));
+        if (inverterW < 1000) {
+            analysis.append(format.tag("• **Recommendation:** Use Pure Sine Wave for all sensitive electronics. Portable units are sufficient.", "GREEN") + "\n");
+        } else if (inverterW < 3000) {
+            analysis.append(format.tag("• **Recommendation:** Residential-grade central inverter. Can handle most major household appliances.", "YELLOW") + "\n");
+        } else {
+            analysis.append(format.tag("• **Recommendation:** Heavy-duty, possibly grid-tie hybrid inverter required. Consider split-phase setup.", "RED") + "\n");
+        }
+
+        // --- System Voltage Analysis ---
+        analysis.append("\n--- 🎯 VOLTAGE OPTIMIZATION ---\n");
+        int voltage = appliance.getSystemVoltage();
+        analysis.append(String.format("• **Selected Voltage:** %dV System.\n", voltage));
+
+        analysis.append("• **Best For:**\n");
+        if (voltage == 12) {
+            analysis.append("  - Small mobile applications (RV/Boats).\n");
+            analysis.append("  - Very short cable runs (under 10ft).\n");
+        } else if (voltage == 24) {
+            analysis.append("  - Balanced power needs (Medium homes/cabins). [YELLOW]Better efficiency than 12V.[/YELLOW]\n");
+        } else {
+            analysis.append("  - High-power, full-home or commercial use. [GREEN]Maximum efficiency and minimal loss.[/GREEN]\n");
+        }
+
+        // --- Charge Controller Analysis ---
+        analysis.append("\n--- 🎛️ CHARGE CONTROLLER ---\n");
+        analysis.append(String.format("• **Required Rating:** %.0f A MPPT Controller.\n", controllerA));
+        if (controllerA < 30) {
+            analysis.append(format.tag("• **Type:** Standard, compact MPPT controller is sufficient and cost-effective.", "GREEN") + "\n");
+        } else {
+            analysis.append(format.tag("• **Type:** Heavy-duty MPPT controller required. Ensure it supports the panel voltage configuration.", "YELLOW") + "\n");
+        }
+
+        // --- Overall Recommendation ---
+        analysis.append("\n--- 🌟 FINAL RECOMMENDATION ---\n");
+        if (totalWh < 1000 && voltage <= 24) {
+            analysis.append(format.tag("This is an **EXCELLENT, well-balanced setup** for portable or small off-grid applications. High cost-effectiveness.", "GREEN") + "\n");
+        } else if (totalWh < 5000) {
+            analysis.append(format.tag("This is a **SOLID residential system**. Plan for future expansion capacity now.", "YELLOW") + "\n");
+        } else {
+            analysis.append(format.tag("This is a **POWERFUL system**. Professional design and installation are strongly recommended.", "RED") + "\n");
+        }
+
+        return analysis.toString();
+    }
 }
