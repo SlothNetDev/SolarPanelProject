@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="refactor: Rename `ApplianceDetailsList` to `ApplianceDetailsPanel` and update imports, formatting, and comments for consistency">
-      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/Utils/ProjectManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" afterDir="false" />
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add flexible window handling and integrate MainPage layout in SolarApp">
+      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/Test/SolarCalculatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +61,12 @@
   "keyToString": {
     "Application.SolarApp.executor": "Run",
     "Application.SolarPanel.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "true",
+    "JUnit.SolarCalculatorTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "true",
+    "Repository.Attach.Sources": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "deletionFromPopupRequiresConfirmation": "false",
@@ -73,6 +79,28 @@
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="SolarCalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="SolarPanelProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Test" />
+      <option name="MAIN_CLASS_NAME" value="Test.SolarCalculatorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.SolarCalculatorTest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -392,7 +420,39 @@
       <option name="project" value="LOCAL" />
       <updated>1760146644294</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="feat: Add `ProjectManager` utility class for saving and loading projects in JSON format">
+      <option name="closed" value="true" />
+      <created>1760146743928</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146743928</updated>
+    </task>
+    <task id="LOCAL-00040" summary="refactor: Update `.idea` workspace tasks and messages to reflect renaming `ApplianceDetailsList` to `ApplianceDetailsPanel`">
+      <option name="closed" value="true" />
+      <created>1760146751932</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146751932</updated>
+    </task>
+    <task id="LOCAL-00041" summary="refactor: Uncomment `showApplianceDetailsPanel` in `MainPage` for appliance detail view functionality">
+      <option name="closed" value="true" />
+      <created>1760146826689</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146826689</updated>
+    </task>
+    <task id="LOCAL-00042" summary="feat: Add flexible window handling and integrate MainPage layout in SolarApp">
+      <option name="closed" value="true" />
+      <created>1760146874110</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1760146874110</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -407,10 +467,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: Rename WelcomPage to WelcomePanel and enhance UI with modern design and functionality" />
-    <MESSAGE value="refactor: Update form bindings and rename package from MainApp to Main for consistency" />
-    <MESSAGE value="feat: Add LoadInputPanel with appliance form and enhanced UI components" />
-    <MESSAGE value="feat: Add modern button component and appliance input handling in LoadInputPanel" />
     <MESSAGE value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
     <MESSAGE value="refactor: Add proper extension to ApplianceListPanel and improve formatting" />
     <MESSAGE value="feat: Add library dependencies and enhance project configuration with artifact settings and updated imports" />
@@ -432,6 +488,10 @@
     <MESSAGE value="feat: Add helper methods for dynamic metric handling in `ApplianceDetailsList` with icon mapping, color tagging, and value formatting" />
     <MESSAGE value="feat: Add toolbar with save and load project functionality to `ApplianceDetailsList` UI" />
     <MESSAGE value="refactor: Rename `ApplianceDetailsList` to `ApplianceDetailsPanel` and update imports, formatting, and comments for consistency" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: Rename `ApplianceDetailsList` to `ApplianceDetailsPanel` and update imports, formatting, and comments for consistency" />
+    <MESSAGE value="feat: Add `ProjectManager` utility class for saving and loading projects in JSON format" />
+    <MESSAGE value="refactor: Update `.idea` workspace tasks and messages to reflect renaming `ApplianceDetailsList` to `ApplianceDetailsPanel`" />
+    <MESSAGE value="refactor: Uncomment `showApplianceDetailsPanel` in `MainPage` for appliance detail view functionality" />
+    <MESSAGE value="feat: Add flexible window handling and integrate MainPage layout in SolarApp" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add flexible window handling and integrate MainPage layout in SolarApp" />
   </component>
 </project>
