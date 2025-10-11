@@ -1158,4 +1158,32 @@ public class ApplianceDetailsList {
         String text = field.getText().trim();
         return text.startsWith("e.g.,") ? "" : text;
     }
+    //Save Json
+    private JPanel createToolbar() {
+        JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        toolbar.setBackground(new Color(245, 245, 245));
+
+        JButton saveBtn = new JButton("💾 Save Project");
+        saveBtn.addActionListener((ActionEvent e) -> {
+            // ✅ Now it uses the mainPage's appliance list (which has real data)
+            ProjectManager.saveProject(this, mainPage.getAppliances());
+        });
+
+        JButton loadBtn = new JButton("📂 Load Project");
+        loadBtn.addActionListener((ActionEvent e) -> {
+            List<Appliance> loaded = ProjectManager.loadProject(this);
+            if (loaded != null) {
+                mainPage.getAppliances().clear();
+                mainPage.getAppliances().addAll(loaded);
+                JOptionPane.showMessageDialog(this,
+                        "Loaded " + loaded.size() + " appliances.",
+                        "Load Successful", JOptionPane.INFORMATION_MESSAGE);
+                mainPage.showApplianceListPanel(); // Refresh after load
+            }
+        });
+
+        toolbar.add(saveBtn);
+        toolbar.add(loadBtn);
+        return toolbar;
+    }
 }
