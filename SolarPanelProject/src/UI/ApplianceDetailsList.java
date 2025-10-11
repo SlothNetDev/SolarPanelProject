@@ -132,4 +132,31 @@ public class ApplianceDetailsList {
         // Add change listeners to track unsaved changes
         addChangeListeners();
     }
+    private void addChangeListeners() {
+        // Listeners for basic details
+        DocumentListener changeListener = new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) { checkForChanges(); }
+            public void removeUpdate(DocumentEvent e) { checkForChanges(); }
+            public void insertUpdate(DocumentEvent e) { checkForChanges(); }
+        };
+
+        nameField.getDocument().addDocumentListener(changeListener);
+        wattsField.getDocument().addDocumentListener(changeListener);
+        qtyField.getDocument().addDocumentListener(changeListener);
+        hoursField.getDocument().addDocumentListener(changeListener);
+        pshField.getDocument().addDocumentListener(changeListener);
+        dodField.getDocument().addDocumentListener(changeListener);
+        daysField.getDocument().addDocumentListener(changeListener);
+
+        voltageCombo.addActionListener(e -> checkForChanges());
+    }
+
+    private void storeOriginalData() {
+        // Wait for fields to be initialized
+        if (nameField != null && voltageCombo != null) {
+            originalBasicData = nameField.getText() + wattsField.getText() + qtyField.getText() + hoursField.getText();
+            originalSolarData = pshField.getText() + dodField.getText() + daysField.getText() + voltageCombo.getSelectedItem();
+        }
+    }
+
 }
