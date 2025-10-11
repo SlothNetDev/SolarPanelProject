@@ -9,10 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add flexible window handling and integrate MainPage layout in SolarApp">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/SolarPanelProject_jar2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/SolarPanelProject_jar.xml" beforeDir="false" />
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Replace `SolarPanelProject:jar` with `SolarPanelProject:jar2` and update `.idea` artifact configurations with additional dependencies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/WelcomePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/WelcomePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +79,20 @@
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.SolarApp">
+    <configuration name="SolarApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main.SolarApp" />
+      <module name="SolarPanelProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SolarCalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SolarPanelProject" />
       <extension name="coverage">
@@ -95,8 +108,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.SolarApp" />
+      <item itemvalue="JUnit.SolarCalculatorTest" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SolarApp" />
         <item itemvalue="JUnit.SolarCalculatorTest" />
       </list>
     </recent_temporary>
@@ -452,7 +470,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760146874110</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="feat: Replace `SolarPanelProject:jar` with `SolarPanelProject:jar2` and update `.idea` artifact configurations with additional dependencies">
+      <option name="closed" value="true" />
+      <created>1760150318415</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1760150318415</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -467,8 +493,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: Add Javadoc, improve commenting, and adjust formatting in LoadInputPanel" />
-    <MESSAGE value="refactor: Add proper extension to ApplianceListPanel and improve formatting" />
     <MESSAGE value="feat: Add library dependencies and enhance project configuration with artifact settings and updated imports" />
     <MESSAGE value="refactor: Update .idea configurations and shelf patch for improved project metadata tracking" />
     <MESSAGE value="feat: Add `ApplianceDetailsList` UI with headers, tabs, navigation buttons, and styled enhancements" />
@@ -492,6 +516,8 @@
     <MESSAGE value="refactor: Update `.idea` workspace tasks and messages to reflect renaming `ApplianceDetailsList` to `ApplianceDetailsPanel`" />
     <MESSAGE value="refactor: Uncomment `showApplianceDetailsPanel` in `MainPage` for appliance detail view functionality" />
     <MESSAGE value="feat: Add flexible window handling and integrate MainPage layout in SolarApp" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add flexible window handling and integrate MainPage layout in SolarApp" />
+    <MESSAGE value="feat: Add comprehensive unit tests for SolarCalculator formulas and integrate JUnit configuration" />
+    <MESSAGE value="feat: Replace `SolarPanelProject:jar` with `SolarPanelProject:jar2` and update `.idea` artifact configurations with additional dependencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Replace `SolarPanelProject:jar` with `SolarPanelProject:jar2` and update `.idea` artifact configurations with additional dependencies" />
   </component>
 </project>

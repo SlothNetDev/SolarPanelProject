@@ -12,82 +12,164 @@ public class WelcomePanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private MainPage mainPage;
 
-    // Define a consistent modern color palette
-    private static final Color BACKGROUND_COLOR = new Color(245, 248, 255); // Light Gray/Blue-White
-    private static final Color PRIMARY_COLOR = new Color(46, 204, 113);    // Green (Start Button)
-    private static final Color ACCENT_COLOR = new Color(52, 152, 219);     // Blue (Title Accent)
-    private static final Color QUIT_COLOR = new Color(231, 76, 60);        // Red (Quit Button)
-    private static final Color TEXT_COLOR = new Color(44, 62, 80);         // Dark Text
+    // Premium color palette
+    private static final Color BG_START = new Color(15, 23, 42);           // Deep Dark Blue
+    private static final Color BG_END = new Color(30, 41, 59);             // Slate
+    private static final Color CARD_COLOR = new Color(30, 41, 59, 230);    // Semi-transparent slate
+    private static final Color ACCENT_PRIMARY = new Color(56, 189, 248);   // Cyan
+    private static final Color ACCENT_GLOW = new Color(14, 165, 233);      // Bright Cyan
+    private static final Color SUCCESS_COLOR = new Color(34, 197, 94);     // Emerald
+    private static final Color SUCCESS_HOVER = new Color(22, 163, 74);
+    private static final Color DANGER_COLOR = new Color(239, 68, 68);      // Red
+    private static final Color DANGER_HOVER = new Color(220, 38, 38);
+    private static final Color TEXT_PRIMARY = new Color(248, 250, 252);    // Almost White
+    private static final Color TEXT_SECONDARY = new Color(148, 163, 184);  // Slate Gray
+
+    private Timer pulseTimer;
+    private float pulseAlpha = 0.3f;
+    private boolean pulseIncreasing = true;
 
     public WelcomePanel(MainPage mainPage) {
         this.mainPage = mainPage;
 
-        // Use a centralized panel with a CardLayout to achieve a clean, centered look
-        setLayout(new GridBagLayout()); // Use GridBagLayout to center the main content panel
-        setBackground(BACKGROUND_COLOR);
+        setLayout(new GridBagLayout());
 
-        //Main Content Container (to apply padding and a soft container look
-        JPanel contentPanel = new JPanel();
+        // Animated pulse effect for the glow
+        pulseTimer = new Timer(50, e -> {
+            if (pulseIncreasing) {
+                pulseAlpha += 0.02f;
+                if (pulseAlpha >= 0.6f) pulseIncreasing = false;
+            } else {
+                pulseAlpha -= 0.02f;
+                if (pulseAlpha <= 0.3f) pulseIncreasing = true;
+            }
+            repaint();
+        });
+        pulseTimer.start();
+
+        // Main Content Container
+        JPanel contentPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Glass morphism effect
+                g2d.setColor(CARD_COLOR);
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+
+                // Subtle border glow
+                g2d.setColor(new Color(56, 189, 248, 40));
+                g2d.setStroke(new BasicStroke(2));
+                g2d.drawRoundRect(1, 1, getWidth()-2, getHeight()-2, 30, 30);
+            }
+        };
+
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBackground(Color.WHITE);
-        contentPanel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(new Color(220, 220, 220), 1), // Light border
-                        BorderFactory.createEmptyBorder(60, 50, 60, 50) // Internal padding
-                )
-        );
+        contentPanel.setOpaque(false);
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(60, 80, 60, 80));
 
-        // Title
-        JLabel title = new JLabel("🔆 Solar Load Calculator");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 36));
-        title.setForeground(ACCENT_COLOR); // Use the blue accent color
+        // Animated solar icon with glow
+        JPanel iconPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                int size = 110;
+                int x = (getWidth() - size) / 2;
+                int y = (getHeight() - size) / 2;
+
+                // Outer glow (pulsing)
+                int glowSize = size + 40;
+                int glowX = (getWidth() - glowSize) / 2;
+                int glowY = (getHeight() - glowSize) / 2;
+
+                RadialGradientPaint outerGlow = new RadialGradientPaint(
+                        getWidth() / 2f, getHeight() / 2f, glowSize / 2f,
+                        new float[]{0f, 1f},
+                        new Color[]{
+                                new Color(251, 191, 36, (int)(pulseAlpha * 255)),
+                                new Color(251, 191, 36, 0)
+                        }
+                );
+                g2d.setPaint(outerGlow);
+                g2d.fillOval(glowX, glowY, glowSize, glowSize);
+
+                // Main gradient circle
+                RadialGradientPaint gradient = new RadialGradientPaint(
+                        getWidth() / 2f, getHeight() / 2f, size / 2f,
+                        new float[]{0f, 0.7f, 1f},
+                        new Color[]{
+                                new Color(253, 224, 71),
+                                new Color(251, 191, 36),
+                                new Color(245, 158, 11)
+                        }
+                );
+                g2d.setPaint(gradient);
+                g2d.fillOval(x, y, size, size);
+
+                // Inner highlight
+                g2d.setColor(new Color(255, 255, 255, 100));
+                g2d.fillOval(x + 15, y + 15, 40, 40);
+            }
+        };
+        iconPanel.setOpaque(false);
+        iconPanel.setPreferredSize(new Dimension(150, 150));
+        iconPanel.setMaximumSize(new Dimension(150, 150));
+        iconPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        iconPanel.setLayout(new GridBagLayout());
+
+        contentPanel.add(iconPanel);
+        contentPanel.add(Box.createVerticalStrut(35));
+
+        // Title with glow effect
+        JLabel title = new JLabel("Solar Calculator") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+                // Text shadow/glow
+                g2d.setColor(new Color(56, 189, 248, 80));
+                g2d.setFont(getFont());
+                FontMetrics fm = g2d.getFontMetrics();
+                int x = (getWidth() - fm.stringWidth(getText())) / 2;
+                int y = fm.getAscent();
+                g2d.drawString(getText(), x+2, y+2);
+
+                super.paintComponent(g);
+            }
+        };
+        title.setFont(new Font("Segoe UI", Font.BOLD, 48));
+        title.setForeground(TEXT_PRIMARY);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(title);
 
-        // Add vertical space
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(15));
 
-        // --- Separator Line ---
-        JPanel separator = new JPanel();
-        separator.setMaximumSize(new Dimension(250, 2));
-        separator.setBackground(PRIMARY_COLOR);
-        separator.setAlignmentX(Component.CENTER_ALIGNMENT);
-        contentPanel.add(separator);
+        // Minimal impactful subtitle
+        JLabel subtitle = new JLabel("Power Your Future");
+        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        subtitle.setForeground(ACCENT_PRIMARY);
+        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contentPanel.add(subtitle);
 
-        // Add vertical space
-        contentPanel.add(Box.createVerticalStrut(30));
+        contentPanel.add(Box.createVerticalStrut(60));
 
-        // Center Message
-        JTextArea message = new JTextArea(
-                "Welcome! This app helps estimate your solar energy needs.\n\n"
-                        + "Click 'Start the App' to begin entering your appliances."
-        );
-        message.setEditable(false);
-        message.setWrapStyleWord(true);
-        message.setLineWrap(true);
-        message.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        message.setForeground(TEXT_COLOR);
-        message.setBackground(Color.WHITE);
-        message.setAlignmentX(Component.CENTER_ALIGNMENT);
-        message.setMaximumSize(new Dimension(400, 100)); // Limit width for better readability
-        // Center the text within the JTextArea
-        message.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-
-        contentPanel.add(message);
-
-        // Add vertical space
-        contentPanel.add(Box.createVerticalStrut(40));
-
-        // --- Buttons ---
-        JButton startBtn = createButton("▶ Start the App", PRIMARY_COLOR);
-        JButton quitBtn = createButton("⏻ Quit", QUIT_COLOR);
+        // Premium buttons
+        JButton startBtn = createPremiumButton("Get Started", SUCCESS_COLOR, SUCCESS_HOVER, true);
+        JButton quitBtn = createPremiumButton("Exit", DANGER_COLOR, DANGER_HOVER, false);
 
         startBtn.addActionListener(e -> mainPage.showLoadInputPanel());
         quitBtn.addActionListener(e -> System.exit(0));
 
         JPanel btnPanel = new JPanel();
-        btnPanel.setBackground(Color.WHITE);
-        btnPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 0)); // Center buttons with more space
+        btnPanel.setOpaque(false);
+        btnPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 0));
 
         btnPanel.add(startBtn);
         btnPanel.add(quitBtn);
@@ -95,31 +177,105 @@ public class WelcomePanel extends JPanel {
 
         contentPanel.add(btnPanel);
 
-        // Add the main content panel to the WelcomePanel
         add(contentPanel);
     }
 
-    // Custom button creator with a modern, flat style and hover effect
-    private JButton createButton(String text, Color color) {
-        JButton btn = new JButton(text);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        btn.setBackground(color);
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Dark gradient background
+        GradientPaint gradient = new GradientPaint(
+                0, 0, BG_START,
+                getWidth(), getHeight(), BG_END
+        );
+        g2d.setPaint(gradient);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+
+        // Ambient light particles effect
+        g2d.setColor(new Color(56, 189, 248, 30));
+        for (int i = 0; i < 20; i++) {
+            int x = (int)(Math.sin(i * 0.5) * getWidth() * 0.4 + getWidth() * 0.5);
+            int y = (int)(Math.cos(i * 0.7) * getHeight() * 0.4 + getHeight() * 0.5);
+            int size = (int)(Math.sin(i * 1.2) * 3 + 5);
+            g2d.fillOval(x, y, size, size);
+        }
+    }
+
+    private JButton createPremiumButton(String text, Color baseColor, Color hoverColor, boolean isPrimary) {
+        JButton btn = new JButton(text) {
+            private boolean isHovered = false;
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Button background with gradient
+                GradientPaint gradient = new GradientPaint(
+                        0, 0, getBackground(),
+                        0, getHeight(), getBackground().darker()
+                );
+                g2d.setPaint(gradient);
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 16, 16);
+
+                // Glow effect on hover
+                if (isHovered && isPrimary) {
+                    g2d.setColor(new Color(getBackground().getRed(),
+                            getBackground().getGreen(),
+                            getBackground().getBlue(), 60));
+                    g2d.fillRoundRect(-4, -4, getWidth()+8, getHeight()+8, 20, 20);
+                }
+
+                // Inner highlight
+                g2d.setColor(new Color(255, 255, 255, 30));
+                g2d.fillRoundRect(2, 2, getWidth()-4, getHeight()/2-2, 14, 14);
+
+                super.paintComponent(g);
+            }
+
+            @Override
+            public void setBackground(Color bg) {
+                super.setBackground(bg);
+                repaint();
+            }
+        };
+
+        btn.setFont(new Font("Segoe UI", Font.BOLD, isPrimary ? 18 : 16));
+        btn.setBackground(baseColor);
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setContentAreaFilled(false);
+        btn.setOpaque(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setPreferredSize(new Dimension(isPrimary ? 200 : 140, isPrimary ? 56 : 50));
 
-        // Use a more substantial border with a slight roundness
-        btn.setBorder(BorderFactory.createEmptyBorder(12, 30, 12, 30));
-
-        // Add a simple hover effect for better user feedback
-        Color darkerColor = color.darker();
         btn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                btn.setBackground(darkerColor);
+                ((JButton)e.getSource()).putClientProperty("isHovered", true);
+                btn.setBackground(hoverColor);
+                btn.setFont(new Font("Segoe UI", Font.BOLD, isPrimary ? 19 : 17));
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
-                btn.setBackground(color);
+                ((JButton)e.getSource()).putClientProperty("isHovered", false);
+                btn.setBackground(baseColor);
+                btn.setFont(new Font("Segoe UI", Font.BOLD, isPrimary ? 18 : 16));
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                btn.setBackground(baseColor.darker().darker());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                btn.setBackground(hoverColor);
             }
         });
 
