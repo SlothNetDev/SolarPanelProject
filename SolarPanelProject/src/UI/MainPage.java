@@ -90,13 +90,11 @@ public class MainPage extends JPanel {
      * "ResultsPanel"); }
      */
 
-/*
     public void showApplianceDetailsPanel(Appliance appliance) {
         ApplianceDetailsPanel detailsPanel = new ApplianceDetailsPanel(appliance, this);
         cardPanel.add(detailsPanel, "ApplianceDetailsPanel");
         cardLayout.show(cardPanel, "ApplianceDetailsPanel");
     }
-*/
 
     // -----------------------------
     // DATA ACCESS
