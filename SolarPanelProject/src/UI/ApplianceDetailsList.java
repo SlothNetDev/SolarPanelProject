@@ -425,4 +425,68 @@ public class ApplianceDetailsList {
             voltageCombo.setSelectedItem(String.valueOf(appliance.getSystemVoltage()));
         }
     }
+    private boolean saveChanges() {
+        try {
+            // Validate basic fields
+            String name = getFieldValue(nameField);
+            String wattsText = getFieldValue(wattsField);
+            String qtyText = getFieldValue(qtyField);
+            String hoursText = getFieldValue(hoursField);
+
+            if (name.isEmpty() || wattsText.isEmpty() || qtyText.isEmpty() || hoursText.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Please fill in all basic appliance details.",
+                        "Missing Information",
+                        JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+
+            // Save basic details
+            appliance.setName(name);
+            appliance.setWatts(Double.parseDouble(wattsText));
+            appliance.setQuantity(Integer.parseInt(qtyText));
+            appliance.setHoursPerDay(Double.parseDouble(hoursText));
+
+            // Save solar parameters only if they're filled (not placeholder)
+            String pshText = getFieldValue(pshField);
+            String dodText = getFieldValue(dodField);
+            String daysText = getFieldValue(daysField);
+
+            if (!pshText.isEmpty()) {
+                appliance.setPeakSunHours(Double.parseDouble(pshText));
+            }
+            if (!dodText.isEmpty()) {
+                appliance.setDepthOfDischarge(Double.parseDouble(dodText));
+            }
+            if (!daysText.isEmpty()) {
+                appliance.setDaysOfAutonomy(Integer.parseInt(daysText));
+            }
+            appliance.setSystemVoltage(Integer.parseInt((String) voltageCombo.getSelectedItem()));
+
+            // Update original data and clear unsaved changes flag
+            storeOriginalData();
+            hasUnsavedChanges = false;
+            updateTabTitles();
+
+            JOptionPane.showMessageDialog(this,
+                    "✓ Appliance details saved successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            return true;
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Please enter valid numeric values in all fields.",
+                    "Invalid Input",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Error saving changes: " + ex.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 }
