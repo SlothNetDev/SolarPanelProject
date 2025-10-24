@@ -8,6 +8,25 @@ import java.awt.event.*;
 import java.util.List;
 import java.util.*;
 
+/**
+ * The ApplianceListPanel class represents a custom JPanel that displays and manages
+ * a list of appliances. It is a part of a larger application and interacts with the
+ * MainPage to enable smooth navigation and data updates.
+ *
+ * This panel includes functionality for displaying appliances in a formatted list,
+ * interacting dynamically with other components, and performing actions such as
+ * deleting selected appliances.
+ *
+ * Fields Overview:
+ * - Provides styling constants for colors and text appearances.
+ * - Utilizes a list model to represent the appliance data.
+ * - Includes interactive components such as delete buttons.
+ *
+ * Functional Overview:
+ * - Handles initialization of the appliance list and its interactions.
+ * - Offers abstraction for structured UI components like headers and action panels.
+ * - Supports data refresh, updates, and user interactions for appliance management.
+ */
 public class ApplianceListPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;

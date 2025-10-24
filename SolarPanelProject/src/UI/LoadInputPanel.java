@@ -7,7 +7,14 @@ import java.awt.event.*;
 import java.util.List;
 
 /**
- * LoadInputPanel - Modern, responsive appliance input form
+ * The LoadInputPanel class represents a user interface panel for adding details
+ * about electrical appliances. It provides input fields for appliance name,
+ * wattage, quantity, and usage hours, along with an option for enabling auto-redirection.
+ * This class is intended to be used as part of the MainPage for interacting with
+ * appliance-related data in a solar system calculator application.
+ *
+ * The panel includes various utility methods for creating UI components,
+ * handling input field operations, and displaying feedback messages to the user.
  */
 public class LoadInputPanel extends JPanel {
 

@@ -9,8 +9,18 @@ import java.util.List;
 
 
 /**
- * MainPage acts as the navigation controller between all app panels.
- * It uses CardLayout to manage panel switching dynamically.
+ * The MainPage class is a JPanel that serves as the central component
+ * for a card-based user interface. It manages the navigation and interaction
+ * between different panels and provides the shared data and resources
+ * accessible by all panels.
+ *
+ * This class employs a CardLayout to switch between different views,
+ * enabling a smooth transition between panels. It manages multiple
+ * panels, such as the WelcomePanel, LoadInputPanel, and ApplianceListPanel,
+ * and also supports additional panels that can be dynamically integrated.
+ *
+ * The MainPage also maintains a list of appliances and provides access
+ * to a SolarCalculator instance that is shared across panels.
  */
 public class MainPage extends JPanel {
 

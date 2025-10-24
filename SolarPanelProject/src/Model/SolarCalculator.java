@@ -46,7 +46,6 @@ public class SolarCalculator {
     //Do calculations
     /**
      * Total daily energy consumption (Wh/day) from a list of appliances.
-     * CORRECT: This is correct - sums up all appliance energy consumption
      */
     public double totalDailyEnergyWh(List<Appliance> appliances) {
         double sum = 0.0;
@@ -58,7 +57,6 @@ public class SolarCalculator {
 
     /**
      * Required PV array power in Watts.
-     * FIXED: Account for system losses and use proper solar insolation formula
      */
     public double requiredPvWatts(double totalWh, double peakSunHours) {
         if (peakSunHours <= 0) {
@@ -77,7 +75,6 @@ public class SolarCalculator {
 
     /**
      * Required battery capacity in Ah.
-     * FIXED: Account for battery efficiency and depth of discharge properly
      */
     public double requiredBatteryAh(double totalWh, int daysOfAutonomy, double dodPercent, int systemVoltage) {
         if (dodPercent <= 0 || dodPercent > 100) {
@@ -93,7 +90,6 @@ public class SolarCalculator {
             return -1;
         }
 
-        // CORRECTED FORMULA:
         // Battery Ah = (Daily Energy × Days of Autonomy) / (System Voltage × DoD × Battery Efficiency)
         double dodFraction = dodPercent / 100.0;
         double totalEnergyNeeded = totalWh * daysOfAutonomy;
@@ -108,7 +104,6 @@ public class SolarCalculator {
 
     /**
      * Recommended inverter size in Watts.
-     * IMPROVED: Ensure minimum inverter size for surge capacity
      */
     public double recommendedInverterW(double peakLoadWatts) {
         if (peakLoadWatts <= 0) {
@@ -126,7 +121,6 @@ public class SolarCalculator {
 
     /**
      * Recommended charge controller in Amperes.
-     * FIXED: Use proper PV current calculation with safety margins
      */
     public double recommendedControllerA(double pvWatts, int systemVoltage) {
         if (pvWatts <= 0) {
@@ -150,7 +144,6 @@ public class SolarCalculator {
 
     /**
      * Calculate peak load watts (considering simultaneous operation).
-     * IMPROVED: Consider if appliances might run simultaneously
      */
     public double peakLoadWatts(List<Appliance> appliances) {
         double sum = 0.0;

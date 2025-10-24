@@ -9,8 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add new `.idea` artifact configuration for `SolarPanelProject:jar` with updated dependencies">
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments">
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Model/Appliance.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/Appliance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Model/SolarCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/SolarCalculator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +70,7 @@
     "Repository.Attach.JavaDocs": "true",
     "Repository.Attach.Sources": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "Main",
@@ -74,10 +79,10 @@
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+    "settings.editor.selected.configurable": "ml.llm.AIAssistantPromptsLibrary"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.SolarApp">
+  <component name="RunManager" selected="JUnit.SolarCalculatorTest">
     <configuration name="SolarApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.SolarApp" />
       <module name="SolarPanelProject" />
@@ -112,8 +117,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SolarApp" />
         <item itemvalue="JUnit.SolarCalculatorTest" />
+        <item itemvalue="Application.SolarApp" />
       </list>
     </recent_temporary>
   </component>
@@ -492,7 +497,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760176153226</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments">
+      <option name="closed" value="true" />
+      <created>1760222756413</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1760222756413</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -507,7 +520,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Add `ApplianceDetailsList` UI with headers, tabs, navigation buttons, and styled enhancements" />
     <MESSAGE value="feat: Add change listeners and original data storage to `ApplianceDetailsList` for enhanced state tracking" />
     <MESSAGE value="feat: Add unsaved changes tracking and prompts to `ApplianceDetailsList` with dynamic tab title updates" />
     <MESSAGE value="feat: Add detailed input panels for appliance and solar parameters in `ApplianceDetailsList` UI" />
@@ -532,6 +544,11 @@
     <MESSAGE value="feat: Replace `SolarPanelProject:jar` with `SolarPanelProject:jar2` and update `.idea` artifact configurations with additional dependencies" />
     <MESSAGE value="feat: Implement redesigned WelcomePanel with premium UI enhancements, animations, and updated color palette" />
     <MESSAGE value="feat: Add new `.idea` artifact configuration for `SolarPanelProject:jar` with updated dependencies" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add new `.idea` artifact configuration for `SolarPanelProject:jar` with updated dependencies" />
+    <MESSAGE value="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -2,6 +2,10 @@ package Model;
 import javax.swing.JOptionPane;
 import java.awt.Component;
 
+/**
+ * Represents an electronic or electrical appliance with defined power consumption,
+ * quantity, usage hours, and solar power system parameters.
+ */
 public class Appliance {
     private String name;
     private double watts;

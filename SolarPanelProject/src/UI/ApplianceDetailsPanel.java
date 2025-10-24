@@ -21,6 +21,45 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Element;
 
+/**
+ * The ApplianceDetailsPanel class is a JPanel-based GUI component used for displaying
+ * and editing details about an appliance, including its basic specifications and solar parameters.
+ * It provides a user-friendly interface for modifying appliance data, performing energy calculations,
+ * and exporting analysis results.
+ *
+ * Fields:
+ * - Appliance and UI related fields store the appliance being edited, the main application page reference,
+ *   input fields for data entry, UI components for displaying results, color themes, and other properties.
+ * - Styling fields define colors and formatting used within the UI.
+ * - Functional fields manage data validation, state tracking, and UI behavior.
+ *
+ * Methods:
+ * - Constructor:
+ *   Initializes the panel with the provided appliance instance and links to the main application page.
+ *
+ * - UI Initialization:
+ *   Methods such as `initializeUI` and `createFormCard` create and configure input forms, tabbed panes,
+ *   and results panels.
+ *
+ * - Change Management:
+ *   Methods like `addChangeListeners`, `checkForChanges`, and `promptSaveChanges` handle user edits and
+ *   manage save prompts to prevent loss of unsaved changes.
+ *
+ * - Data Management:
+ *   Methods such as `storeOriginalData`, `loadApplianceData`, and `saveChanges` manage appliance data
+ *   persistence.
+ *
+ * - Solar Calculations:
+ *   Provides methods like `calculateThisAppliance` and `generateSystemAnalysis` for performing energy
+ *   and solar system calculations based on user input.
+ *
+ * - Results Export:
+ *   Includes `exportResultsToPDF` and CSV export methods for saving analysis results to external files.
+ *
+ * - UI Utilities:
+ *   Helper methods like `createStyledButton`, `createMetricPanel`, and `getColorForMetric` assist in
+ *   constructing various UI components and customizing appearance.
+ */
 public class ApplianceDetailsPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;

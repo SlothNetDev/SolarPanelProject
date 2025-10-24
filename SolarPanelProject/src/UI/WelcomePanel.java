@@ -6,6 +6,25 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * WelcomePanel is a graphical user interface component that serves as the entry screen
+ * for the application. It displays options to either start the application or quit, along
+ * with visually appealing elements and animations.
+ *
+ * The panel includes features such as:
+ * - A premium dark-themed gradient background.
+ * - Glassmorphism-based UI design with rounded corners and subtle glow effects.
+ * - Animated glowing elements to enhance visual appeal.
+ * - Centralized content arranged using a flexible layout.
+ * - Buttons styled with hover effects and distinct colors for success and danger actions.
+ * - A dynamic pulsating effect on selected UI elements.
+ *
+ * The panel ensures a visually engaging and user-friendly experience while providing
+ * straightforward navigation to the primary application functions.
+ *
+ * It also integrates with a provided MainPage instance to facilitate navigation between
+ * different sections of the application.
+ */
 //WelcomePanel — Entry screen with "Start" and "Quit" options, with enhanced UI aesthetics.
 public class WelcomePanel extends JPanel {
 
