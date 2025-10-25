@@ -9,12 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments">
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add detailed class-level Javadoc comments for UI panels, SolarCalculator, and Appliance classes">
+      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/CountryConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Main/SolarApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Model/Appliance.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/Appliance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Model/SolarCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/SolarCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/LoadInputPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/LoadInputPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +82,7 @@
     "settings.editor.selected.configurable": "ml.llm.AIAssistantPromptsLibrary"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.SolarCalculatorTest">
+  <component name="RunManager" selected="Application.SolarApp">
     <configuration name="SolarApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.SolarApp" />
       <module name="SolarPanelProject" />
@@ -117,8 +117,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.SolarCalculatorTest" />
         <item itemvalue="Application.SolarApp" />
+        <item itemvalue="JUnit.SolarCalculatorTest" />
       </list>
     </recent_temporary>
   </component>
@@ -505,7 +505,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760222756413</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="feat: Add detailed class-level Javadoc comments for UI panels, SolarCalculator, and Appliance classes">
+      <option name="closed" value="true" />
+      <created>1761292770186</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1761292770186</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -520,7 +528,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Add change listeners and original data storage to `ApplianceDetailsList` for enhanced state tracking" />
     <MESSAGE value="feat: Add unsaved changes tracking and prompts to `ApplianceDetailsList` with dynamic tab title updates" />
     <MESSAGE value="feat: Add detailed input panels for appliance and solar parameters in `ApplianceDetailsList` UI" />
     <MESSAGE value="feat: Add export to PDF/CSV functionality and results panel to `ApplianceDetailsList` UI" />
@@ -545,7 +552,8 @@
     <MESSAGE value="feat: Implement redesigned WelcomePanel with premium UI enhancements, animations, and updated color palette" />
     <MESSAGE value="feat: Add new `.idea` artifact configuration for `SolarPanelProject:jar` with updated dependencies" />
     <MESSAGE value="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments" />
+    <MESSAGE value="feat: Add detailed class-level Javadoc comments for UI panels, SolarCalculator, and Appliance classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Add detailed class-level Javadoc comments for UI panels, SolarCalculator, and Appliance classes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
