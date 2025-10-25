@@ -295,6 +295,16 @@ public class LoadInputPanel extends JPanel {
             return;
         }
 
+        // Validate name length and format
+        if (name.length() < 2 || name.length() > 30) {
+            showError("Appliance name must be between 2 and 30 characters.");
+            return;
+        }
+        if (!name.matches("[a-zA-Z0-9\\s]+")) {
+            showError("Appliance name can only contain letters, numbers, and spaces.");
+            return;
+        }
+
         try {
             String wattsStr = getFieldValue(wattsField);
             String qtyStr = getFieldValue(qtyField);
@@ -304,30 +314,40 @@ public class LoadInputPanel extends JPanel {
             int qty = Integer.parseInt(qtyStr);
             double hours = Double.parseDouble(hoursStr);
 
-            if (watts <= 0 || qty <= 0 || hours <= 0) {
-                showError("All numeric values must be greater than zero.");
+            // ✅ Numeric value validation
+            if (watts <= 0 || watts > 10000) {
+                showError("Power (Watts) must be between 1 and 10,000.");
                 return;
             }
 
+            if (qty <= 0 || qty > 10000) {
+                showError("Quantity must be between 1 and 10000.");
+                return;
+            }
+
+            if (hours <= 0 || hours > 24) {
+                showError("Hours per day must be between 0.1 and 24.");
+                return;
+            }
+
+            // ✅ Passed all validations
             Appliance appliance = new Appliance(name, watts, qty, hours);
-            mainPage.getAppliances().add(appliance); // ✅ Add directly to shared list
+            mainPage.getAppliances().add(appliance);
 
             showSuccess(String.format("✓ Added: %s (%dW × %d)", name, (int) watts, qty));
 
-            // Clear fields for next entry
+            // Clear input fields for next entry
             clearField(nameField, "e.g., LED Bulb");
             clearField(wattsField, "e.g., 10");
             clearField(qtyField, "e.g., 5");
             clearField(hoursField, "e.g., 4.5");
 
-            // Auto-redirect if checkbox is selected
+            // Auto-redirect after success
             if (autoRedirectCheckbox.isSelected()) {
-                // Small delay to let user see the success message
                 Timer timer = new Timer(800, e -> goToApplianceList());
                 timer.setRepeats(false);
                 timer.start();
             } else {
-                // Stay on current panel and focus on name field for next entry
                 nameField.requestFocus();
             }
 
@@ -335,6 +355,7 @@ public class LoadInputPanel extends JPanel {
             showError("Please enter valid numbers for Watts, Quantity, and Hours.");
         }
     }
+
 
     private void goToApplianceList() {
         // ✅ No need to transfer - just navigate
