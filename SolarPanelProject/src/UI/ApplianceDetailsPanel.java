@@ -1,6 +1,7 @@
 package UI;
 
 import Model.Appliance;
+import Model.CountryConfig;
 import Model.SolarCalculator;
 import Utils.ProjectManager;
 import javax.swing.*;
@@ -581,6 +582,7 @@ public class ApplianceDetailsPanel extends JPanel {
 
             // Generate intelligent analysis
             String analysis = generateSystemAnalysis(totalWh, pvWatts, batteryAh, inverterW, controllerA);
+            String analysiss = generateSystemSummaryAnalysis(totalWh, pvWatts, batteryAh, inverterW, controllerA);
 
             // Format results
             String resultsText = String.format(
@@ -612,97 +614,792 @@ public class ApplianceDetailsPanel extends JPanel {
         }
     }
 
-    private String generateSystemAnalysis(double totalWh, double pvWatts, double batteryAh, double inverterW, double controllerA) {
+    private String generateSystemAnalysis(double totalWh, double pvWatts, double batteryAh,
+                                          double inverterW, double controllerA) {
         StringBuilder analysis = new StringBuilder();
+        int voltage = appliance.getSystemVoltage();
+        double psh = appliance.getPeakSunHours();
+        double dod = appliance.getDepthOfDischarge();
+        int days = appliance.getDaysOfAutonomy();
 
-        // --- Helper for formatting based on color ---
-        // NOTE: Your UI must parse these tags: [RED], [YELLOW], [GREEN]
+        //country pricing
+
+        CountryConfig country = appliance.getCountry();
+
+        // Helper for color formatting
         var format = new Object() {
             String tag(String text, String color) {
                 return String.format("[%s]%s[/%s]", color, text, color);
             }
         };
 
-        // --- Energy Consumption Analysis ---
-        analysis.append("--- 🔋 ENERGY DEMAND ---\n");
-        if (totalWh < 500) {
-            analysis.append(format.tag("• **Very Low Load:** Ideal for small devices. Perfect for portable or small off-grid kits.", "GREEN") + "\n");
+        // ========================================================================
+        // 1. ENERGY DEMAND ANALYSIS
+        // ========================================================================
+        analysis.append("--- 🔋 ENERGY DEMAND PROFILE ---\n");
+        analysis.append(String.format("• **Daily Consumption:** %.0f Wh/day for %s\n",
+                totalWh, appliance.getName()));
+
+        double monthlyKwh = (totalWh * 30) / 1000;
+        double monthlyBill = monthlyKwh * country.getElectricityRatePerKwh();
+
+        analysis.append(String.format("• **Monthly Equivalent:** ~%.1f kWh (comparable to %s%.0f bill at %s%.2f/kWh)\n",
+                monthlyKwh,
+                country.getCurrencySymbol(), monthlyBill,
+                country.getCurrencySymbol(), country.getElectricityRatePerKwh()));
+
+        if (totalWh < 300) {
+            analysis.append(format.tag("• **Load Type:** Minimal - Perfect for LED lighting, phone charging, small electronics.", "GREEN") + "\n");
+            analysis.append(format.tag("• **Use Case:** Camping, emergency kits, van life essentials, or remote sensors.", "GREEN") + "\n");
+        } else if (totalWh < 800) {
+            analysis.append(format.tag("• **Load Type:** Light - Can power laptop, lights, fans, and small appliances.", "GREEN") + "\n");
+            analysis.append(format.tag("• **Use Case:** Remote work setup, weekend cabin, or RV daily needs.", "GREEN") + "\n");
         } else if (totalWh < 2000) {
-            analysis.append(format.tag("• **Moderate Load:** Suitable for small appliances. Excellent for RV, camping, or small cabin systems.", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Load Type:** Moderate - Handles refrigerator, TV, microwave (not simultaneously).", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Use Case:** Off-grid home office, tiny house, or backup for essential circuits.", "YELLOW") + "\n");
         } else if (totalWh < 5000) {
-            analysis.append(format.tag("• **High Load:** Can power multiple appliances simultaneously. Suitable for home office or small household use.", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Load Type:** High - Multiple appliances, washer, power tools can run with planning.", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Use Case:** Full-time off-grid living (small household) or comprehensive backup system.", "YELLOW") + "\n");
         } else {
-            analysis.append(format.tag("• **Heavy Load:** Requires a robust, high-capacity system. Ideal for full residential or commercial applications.", "RED") + "\n");
+            analysis.append(format.tag("• **Load Type:** Very High - Equivalent to typical household with AC, electric heating, or workshop.", "RED") + "\n");
+            analysis.append(format.tag("• **Use Case:** Large residential system, farm operations, or small commercial applications.", "RED") + "\n");
         }
 
-        // --- Solar Panel Analysis ---
-        analysis.append("\n--- ☀️ PV ARRAY SIZING ---\n");
-        if (pvWatts < 300) {
-            analysis.append(format.tag("• **Small Array:** Equivalent to 1-2 standard 300W panels. Easy installation.", "GREEN") + "\n");
-        } else if (pvWatts < 1000) {
-            analysis.append(format.tag("• **Medium Array:** Requires 3-4 panels. Suitable for most standard residential rooftops.", "YELLOW") + "\n");
+        // ========================================================================
+        // 2. SOLAR PANEL ARRAY ANALYSIS
+        // ========================================================================
+        analysis.append("\n--- ☀️ PHOTOVOLTAIC ARRAY DESIGN ---\n");
+        analysis.append(String.format("• **Required Capacity:** %.0f W peak power\n", pvWatts));
+
+        // Panel configuration examples
+        int panels300w = (int) Math.ceil(pvWatts / 300.0);
+        int panels400w = (int) Math.ceil(pvWatts / 400.0);
+        double roofArea = pvWatts / 150; // ~150W per sq meter typical
+
+        analysis.append(String.format("• **Configuration Options:**\n"));
+        analysis.append(String.format("  - %d× 300W panels (~%.1f m²) OR\n", panels300w, roofArea));
+        analysis.append(String.format("  - %d× 400W panels (~%.1f m²)\n", panels400w, roofArea * 0.75));
+
+        // Daily production estimate
+        double dailyProduction = pvWatts * psh * 0.85; // 85% system efficiency
+        double productionRatio = dailyProduction / totalWh;
+
+        analysis.append(String.format("• **Daily Production:** ~%.0f Wh with %.1f peak sun hours\n",
+                dailyProduction, psh));
+
+        if (productionRatio >= 1.5) {
+            analysis.append(format.tag("• **Production Status:** EXCELLENT - 50%+ surplus! Great for winter/cloudy days.", "GREEN") + "\n");
+            analysis.append(format.tag("• **Recommendation:** Consider reducing array size to save costs, or add more loads.", "GREEN") + "\n");
+        } else if (productionRatio >= 1.2) {
+            analysis.append(format.tag("• **Production Status:** OPTIMAL - 20% safety margin for seasonal variation.", "GREEN") + "\n");
+            analysis.append(format.tag("• **Recommendation:** Well-balanced system. No changes needed.", "GREEN") + "\n");
+        } else if (productionRatio >= 1.0) {
+            analysis.append(format.tag("• **Production Status:** ADEQUATE - Meets needs but minimal margin for cloudy days.", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Recommendation:** Consider 15-20% larger array for reliability in winter.", "YELLOW") + "\n");
         } else {
-            analysis.append(format.tag("• **Large Array:** Requires professional installation planning. Consider split arrays for optimized exposure.", "RED") + "\n");
+            analysis.append(format.tag("• **Production Status:** ⚠️ INSUFFICIENT - Will not meet daily demand!", "RED") + "\n");
+            analysis.append(format.tag("• **Recommendation:** CRITICAL - Increase array by " +
+                    String.format("%.0f%% minimum", (1/productionRatio - 1) * 100) +
+                    " or reduce loads.", "RED") + "\n");
         }
 
-        // --- Battery System Analysis ---
-        analysis.append("\n--- ⚡ BATTERY STORAGE ---\n");
-        analysis.append(String.format("• **Capacity:** %.0f Ah required for %d days of autonomy.\n", batteryAh, appliance.getDaysOfAutonomy()));
-
-        if (batteryAh < 150 && appliance.getDepthOfDischarge() <= 50) {
-            analysis.append(format.tag("• **System Type:** Small, daily-cycling setup. AGM or basic Lithium recommended.", "GREEN") + "\n");
-        } else if (batteryAh < 500) {
-            analysis.append(format.tag("• **System Type:** Medium bank for extended use. Lithium (LiFePO4) is strongly recommended.", "YELLOW") + "\n");
+        // Installation considerations
+        if (pvWatts < 600) {
+            analysis.append(format.tag("• **Installation:** Simple DIY - Can mount on RV roof, portable frames, or small ground mount.", "GREEN") + "\n");
+        } else if (pvWatts < 2000) {
+            analysis.append(format.tag("• **Installation:** Moderate complexity - Rooftop or ground mount. DIY-friendly with proper planning.", "YELLOW") + "\n");
         } else {
-            analysis.append(format.tag("• **System Type:** Large backup bank. Professional battery management system (BMS) is essential.", "RED") + "\n");
+            analysis.append(format.tag("• **Installation:** Professional recommended - Large array requires structural assessment and code compliance.", "RED") + "\n");
         }
 
-        // --- Inverter Analysis ---
-        analysis.append("\n--- 🔌 INVERTER SELECTION ---\n");
-        analysis.append(String.format("• **Required Size:** %.0f W (Includes 25%% safety overhead).\n", inverterW));
+        // ========================================================================
+        // 3. BATTERY STORAGE SYSTEM
+        // ========================================================================
+        analysis.append("\n--- ⚡ BATTERY BANK SPECIFICATIONS ---\n");
+        analysis.append(String.format("• **Required Capacity:** %.0f Ah @ %dV = %.1f kWh usable\n",
+                batteryAh, voltage, (batteryAh * voltage) / 1000.0));
+        analysis.append(String.format("• **Autonomy Period:** %d day%s without solar input\n",
+                days, days > 1 ? "s" : ""));
+        analysis.append(String.format("• **Depth of Discharge:** %.0f%% (%s for battery longevity)\n",
+                dod, dod <= 50 ? "Conservative - Excellent" : dod <= 80 ? "Moderate - Good" : "Aggressive - Acceptable for LiFePO4"));
+
+        // Battery chemistry recommendations
+        analysis.append("\n• **Recommended Chemistry:**\n");
+        if (batteryAh < 100 && dod <= 50) {
+            analysis.append(format.tag("  ✓ AGM Lead-Acid - Cost-effective, proven, maintenance-free", "GREEN") + "\n");
+            analysis.append("  ✓ LiFePO4 - Premium option, longer lifespan (10+ years)\n");
+        } else if (batteryAh < 300) {
+            analysis.append(format.tag("  ✓ LiFePO4 (Recommended) - Better value long-term despite higher upfront cost", "GREEN") + "\n");
+            analysis.append("  ○ AGM - Acceptable but requires 2× capacity vs lithium\n");
+        } else {
+            analysis.append(format.tag("  ✓ LiFePO4 ONLY - Large lead-acid banks are impractical (weight, space, maintenance)", "YELLOW") + "\n");
+            analysis.append(format.tag("  ✓ Must include Battery Management System (BMS) for safety", "YELLOW") + "\n");
+        }
+
+        // Real-world context
+        double runtimeHours = (batteryAh * voltage * (dod/100) * 0.85) / (totalWh / 24);
+        analysis.append(String.format("\n• **Real-World Runtime:** ~%.1f hours of continuous operation at full load\n",
+                runtimeHours));
+
+        if (days >= 3) {
+            analysis.append(format.tag("• **Resilience:** Excellent backup duration. Can handle extended storms or system maintenance.", "GREEN") + "\n");
+        } else if (days >= 2) {
+            analysis.append(format.tag("• **Resilience:** Good backup. Covers typical weather events (2-3 cloudy days).", "YELLOW") + "\n");
+        } else {
+            analysis.append(format.tag("• **Resilience:** Minimal backup. System depends on daily solar charging.", "YELLOW") + "\n");
+            analysis.append(format.tag("  Consider increasing autonomy to 2-3 days for critical applications.", "YELLOW") + "\n");
+        }
+
+        // ========================================================================
+        // 4. INVERTER REQUIREMENTS
+        // ========================================================================
+        analysis.append("\n--- 🔌 POWER INVERTER SELECTION ---\n");
+        double actualLoad = appliance.getWatts() * appliance.getQuantity();
+        analysis.append(String.format("• **Continuous Rating:** %.0f W (with 25%% safety margin)\n", inverterW));
+        analysis.append(String.format("• **Your Peak Load:** %.0f W actual\n", actualLoad));
+
+        // Surge capacity consideration
+        double surgeCap = inverterW * 2; // Most inverters: 2x continuous for 5-10 seconds
+        analysis.append(String.format("• **Surge Capacity:** ~%.0f W (for motor/compressor startup)\n", surgeCap));
+
         if (inverterW < 1000) {
-            analysis.append(format.tag("• **Recommendation:** Use Pure Sine Wave for all sensitive electronics. Portable units are sufficient.", "GREEN") + "\n");
+            analysis.append(format.tag("• **Type:** Modified sine wave acceptable, but pure sine recommended for electronics.", "GREEN") + "\n");
+            analysis.append(format.tag("• **Form Factor:** Compact portable unit. Can mount near battery or integrate into panel.", "GREEN") + "\n");
         } else if (inverterW < 3000) {
-            analysis.append(format.tag("• **Recommendation:** Residential-grade central inverter. Can handle most major household appliances.", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Type:** Pure Sine Wave REQUIRED for sensitive electronics, appliances with motors.", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Form Factor:** Wall-mounted residential inverter. Requires proper ventilation.", "YELLOW") + "\n");
         } else {
-            analysis.append(format.tag("• **Recommendation:** Heavy-duty, possibly grid-tie hybrid inverter required. Consider split-phase setup.", "RED") + "\n");
+            analysis.append(format.tag("• **Type:** High-quality Pure Sine Wave with low THD (<3%). Grid-tie capable recommended.", "RED") + "\n");
+            analysis.append(format.tag("• **Form Factor:** Large format inverter. May require split-phase (120/240V) capability.", "RED") + "\n");
         }
 
-        // --- System Voltage Analysis ---
-        analysis.append("\n--- 🎯 VOLTAGE OPTIMIZATION ---\n");
-        int voltage = appliance.getSystemVoltage();
-        analysis.append(String.format("• **Selected Voltage:** %dV System.\n", voltage));
-
-        analysis.append("• **Best For:**\n");
-        if (voltage == 12) {
-            analysis.append("  - Small mobile applications (RV/Boats).\n");
-            analysis.append("  - Very short cable runs (under 10ft).\n");
-        } else if (voltage == 24) {
-            analysis.append("  - Balanced power needs (Medium homes/cabins). [YELLOW]Better efficiency than 12V.[/YELLOW]\n");
+        // Efficiency notes
+        analysis.append("\n• **Efficiency Considerations:**\n");
+        if (inverterW > actualLoad * 2) {
+            analysis.append(format.tag("  ⚠️ Inverter is oversized - will have poor efficiency at low loads (idle draw).", "YELLOW") + "\n");
         } else {
-            analysis.append("  - High-power, full-home or commercial use. [GREEN]Maximum efficiency and minimal loss.[/GREEN]\n");
+            analysis.append(format.tag("  ✓ Good sizing - inverter will operate in efficient range (50-80% load).", "GREEN") + "\n");
         }
 
-        // --- Charge Controller Analysis ---
-        analysis.append("\n--- 🎛️ CHARGE CONTROLLER ---\n");
-        analysis.append(String.format("• **Required Rating:** %.0f A MPPT Controller.\n", controllerA));
+        // ========================================================================
+        // 5. CHARGE CONTROLLER SPECIFICATIONS
+        // ========================================================================
+        analysis.append("\n--- 🎛️ SOLAR CHARGE CONTROLLER ---\n");
+        analysis.append(String.format("• **Required Rating:** %.0f A MPPT controller\n", controllerA));
+        analysis.append(String.format("• **System Voltage:** %dV (must match battery bank)\n", voltage));
+
+        // MPPT vs PWM guidance
+        analysis.append("\n• **Controller Technology:**\n");
+        if (pvWatts < 400) {
+            analysis.append("  ✓ MPPT Recommended - 20-30% more efficient, especially in cold weather\n");
+            analysis.append("  ○ PWM Acceptable - Lower cost but requires panel voltage = battery voltage\n");
+        } else {
+            analysis.append(format.tag("  ✓ MPPT REQUIRED - System too large for PWM, would waste significant power", "YELLOW") + "\n");
+        }
+
+        // Voltage configuration
+        double panelVoltage = voltage == 12 ? 18 : voltage == 24 ? 36 : 72; // Typical Vmp
+        analysis.append(String.format("\n• **Panel String Configuration:**\n"));
+        analysis.append(String.format("  - Panel Vmp should be %.0f-%.0fV for optimal MPPT tracking\n",
+                panelVoltage * 0.9, panelVoltage * 1.3));
+        analysis.append(String.format("  - Example: %s configuration for %dV system\n",
+                voltage == 12 ? "1 panel in series" : voltage == 24 ? "2 panels in series" : "4 panels in series",
+                voltage));
+
         if (controllerA < 30) {
-            analysis.append(format.tag("• **Type:** Standard, compact MPPT controller is sufficient and cost-effective.", "GREEN") + "\n");
+            analysis.append(format.tag("• **Size Category:** Standard controller - Widely available, affordable, reliable.", "GREEN") + "\n");
+        } else if (controllerA < 60) {
+            analysis.append(format.tag("• **Size Category:** Medium-duty controller - Ensure proper heat dissipation and ventilation.", "YELLOW") + "\n");
         } else {
-            analysis.append(format.tag("• **Type:** Heavy-duty MPPT controller required. Ensure it supports the panel voltage configuration.", "YELLOW") + "\n");
+            analysis.append(format.tag("• **Size Category:** Heavy-duty controller - May need multiple units or commercial-grade equipment.", "RED") + "\n");
         }
 
-        // --- Overall Recommendation ---
-        analysis.append("\n--- 🌟 FINAL RECOMMENDATION ---\n");
-        if (totalWh < 1000 && voltage <= 24) {
-            analysis.append(format.tag("This is an **EXCELLENT, well-balanced setup** for portable or small off-grid applications. High cost-effectiveness.", "GREEN") + "\n");
-        } else if (totalWh < 5000) {
-            analysis.append(format.tag("This is a **SOLID residential system**. Plan for future expansion capacity now.", "YELLOW") + "\n");
+        // ========================================================================
+        // 6. SYSTEM VOLTAGE OPTIMIZATION
+        // ========================================================================
+        analysis.append("\n--- 🎯 VOLTAGE SELECTION ANALYSIS ---\n");
+        analysis.append(String.format("• **Selected Voltage:** %dV DC System\n", voltage));
+
+        analysis.append("\n• **Characteristics of " + voltage + "V systems:**\n");
+        if (voltage == 12) {
+            analysis.append("  ✓ Most common - Easy to find components and accessories\n");
+            analysis.append("  ✓ Direct compatibility with automotive/marine equipment\n");
+            analysis.append("  ⚠️ Higher current = thicker wires required (expensive, heavy)\n");
+            analysis.append("  ⚠️ Voltage drop is critical - keep wiring under 10 feet total\n");
+
+            if (totalWh > 1000) {
+                analysis.append(format.tag("  ⚠️ WARNING: 12V is inefficient for this load size. Consider 24V or 48V.", "YELLOW") + "\n");
+            }
+        } else if (voltage == 24) {
+            analysis.append("  ✓ Sweet spot for most residential systems (1-3 kWh/day)\n");
+            analysis.append("  ✓ 50% less current than 12V = thinner, cheaper wiring\n");
+            analysis.append("  ✓ Good component availability and pricing\n");
+            analysis.append("  ○ Some 12V devices need DC-DC converters\n");
+
+            if (totalWh < 500) {
+                analysis.append(format.tag("  ℹ️ NOTE: 12V might be more practical for very small systems.", "YELLOW") + "\n");
+            } else if (totalWh > 4000) {
+                analysis.append(format.tag("  ℹ️ NOTE: 48V would be more efficient for this load size.", "YELLOW") + "\n");
+            }
+        } else { // 48V
+            analysis.append("  ✓ Most efficient - Minimal losses, maximum range\n");
+            analysis.append("  ✓ 75% less current than 12V = smallest wire gauge possible\n");
+            analysis.append("  ✓ Standard for professional/commercial installations\n");
+            analysis.append("  ⚠️ Requires step-down converters for 12V/24V devices\n");
+            analysis.append("  ⚠️ Component costs slightly higher (but offset by savings)\n");
+
+            if (totalWh < 2000) {
+                analysis.append(format.tag("  ℹ️ NOTE: 48V may be overkill for smaller systems. 24V is adequate.", "YELLOW") + "\n");
+            }
+        }
+
+        // Wire gauge guidance
+        analysis.append("\n• **Wire Sizing Impact:**\n");
+        double current = totalWh / (voltage * 24); // Rough average current
+        if (voltage == 12) {
+            analysis.append(String.format("  - Average current: ~%.1f A requires 6-10 AWG wire (thick!)\n", current));
+        } else if (voltage == 24) {
+            analysis.append(String.format("  - Average current: ~%.1f A requires 10-14 AWG wire (moderate)\n", current));
         } else {
-            analysis.append(format.tag("This is a **POWERFUL system**. Professional design and installation are strongly recommended.", "RED") + "\n");
+            analysis.append(String.format("  - Average current: ~%.1f A requires 12-16 AWG wire (thin!)\n", current));
         }
 
         return analysis.toString();
+    }
+
+    private String generateSystemSummaryAnalysis(double totalWh, double pvWatts, double batteryAh,
+                                                 double inverterW, double controllerA) {
+        StringBuilder summary = new StringBuilder();
+        int voltage = appliance.getSystemVoltage();
+        double psh = appliance.getPeakSunHours();
+        int days = appliance.getDaysOfAutonomy();
+        double dod = appliance.getDepthOfDischarge();
+
+        var format = new Object() {
+            String tag(String text, String color) {
+                return String.format("[%s]%s[/%s]", color, text, color);
+            }
+        };
+
+        summary.append("\n═══════════════════════════════════════════════════════════════\n");
+        summary.append("                    🎯 EXECUTIVE SUMMARY\n");
+        summary.append("═══════════════════════════════════════════════════════════════\n\n");
+
+        // ========================================================================
+        // 1. SYSTEM CLASSIFICATION & SUITABILITY
+        // ========================================================================
+        summary.append("--- 📊 SYSTEM PROFILE ---\n");
+
+        String systemClass;
+        String primaryUse;
+        String colorTag;
+
+        if (totalWh < 500 && voltage == 12) {
+            systemClass = "Ultra-Portable / Emergency Backup";
+            primaryUse = "Weekend camping, van life, emergency preparedness kits";
+            colorTag = "GREEN";
+        } else if (totalWh < 1500 && voltage <= 24) {
+            systemClass = "Small Off-Grid / Remote Power";
+            primaryUse = "Cabin weekends, remote monitoring, RV full-timing, shed workshop";
+            colorTag = "GREEN";
+        } else if (totalWh < 3000 && voltage <= 24) {
+            systemClass = "Medium Residential / Home Office";
+            primaryUse = "Work-from-home setup, tiny house, essential circuit backup";
+            colorTag = "YELLOW";
+        } else if (totalWh < 5000 && voltage >= 24) {
+            systemClass = "Large Residential / Small Farm";
+            primaryUse = "Full-time off-grid living, whole-home backup, small farm operations";
+            colorTag = "YELLOW";
+        } else {
+            systemClass = "Heavy-Duty Residential / Light Commercial";
+            primaryUse = "Large household, farm with equipment, small business, workshop";
+            colorTag = "RED";
+        }
+
+        summary.append(format.tag("• **Classification:** " + systemClass, colorTag) + "\n");
+        summary.append(format.tag("• **Ideal Application:** " + primaryUse, colorTag) + "\n");
+        summary.append(String.format("• **Daily Energy:** %.0f Wh (~%.1f kWh/month)\n\n",
+                totalWh, (totalWh * 30) / 1000));
+
+        // ========================================================================
+        // 2. INVESTMENT & COMPLEXITY OVERVIEW
+        // ========================================================================
+        summary.append("--- 💰 INVESTMENT OVERVIEW ---\n");
+
+        double estimatedCost = estimateSystemCost(pvWatts, batteryAh, inverterW, voltage);
+        String costRange;
+        String installTime;
+        String skillLevel;
+
+        if (estimatedCost < 50000) {
+            costRange = "₱25,000 - ₱50,000";
+            installTime = "4-8 hours (DIY weekend project)";
+            skillLevel = "Beginner-friendly with basic electrical knowledge";
+            colorTag = "GREEN";
+        } else if (estimatedCost < 150000) {
+            costRange = "₱50,000 - ₱150,000";
+            installTime = "1-3 days (DIY) or 4-8 hours (professional)";
+            skillLevel = "Intermediate DIY or hire licensed electrician";
+            colorTag = "YELLOW";
+        } else if (estimatedCost < 350000) {
+            costRange = "₱150,000 - ₱350,000";
+            installTime = "3-5 days (advanced DIY) or 1-2 days (professional)";
+            skillLevel = "Advanced DIY with electrical experience, or professional strongly recommended";
+            colorTag = "YELLOW";
+        } else {
+            costRange = "₱350,000 - ₱750,000+";
+            installTime = "5-10 days including permitting and inspection";
+            skillLevel = "Professional installation REQUIRED. Licensed electrician and permits needed.";
+            colorTag = "RED";
+        }
+
+        summary.append(format.tag("• **Estimated Budget:** " + costRange + " (equipment only, no labor)", colorTag) + "\n");
+        summary.append(format.tag("• **Installation Time:** " + installTime, colorTag) + "\n");
+        summary.append(format.tag("• **Skill Level:** " + skillLevel, colorTag) + "\n\n");
+
+        // Cost breakdown
+        summary.append("• **Budget Breakdown:**\n");
+        summary.append(String.format("  - Solar Panels: ~₱%.0f (%.0fW @ ₱40/W)\n", pvWatts * 40, pvWatts));
+        summary.append(String.format("  - Battery Bank: ~₱%.0f (%.0fAh LiFePO4 @ ₱130/Ah)\n", batteryAh * 130, batteryAh));
+        summary.append(String.format("  - Inverter: ~₱%.0f (%.0fW @ ₱20/W)\n", inverterW * 20, inverterW));
+        summary.append(String.format("  - Charge Controller: ~₱%.0f (%.0fA MPPT)\n", controllerA * 600, controllerA));
+        summary.append("  - Wiring/Hardware: ~₱15,000-25,000\n\n");
+
+        // ========================================================================
+        // 3. PERFORMANCE SCORECARD
+        // ========================================================================
+        summary.append("--- 📈 PERFORMANCE SCORECARD ---\n");
+
+        // Energy Balance Score
+        double dailyProduction = pvWatts * psh * 0.85;
+        double productionRatio = dailyProduction / totalWh;
+        String energyGrade;
+        String energyFeedback;
+
+        if (productionRatio >= 1.5) {
+            energyGrade = "A+ (Excellent Surplus)";
+            energyFeedback = "System produces 50%+ more than needed. Great for winter!";
+            colorTag = "GREEN";
+        } else if (productionRatio >= 1.2) {
+            energyGrade = "A (Optimal Balance)";
+            energyFeedback = "Perfect sizing with 20% safety margin for cloudy days.";
+            colorTag = "GREEN";
+        } else if (productionRatio >= 1.0) {
+            energyGrade = "B (Adequate)";
+            energyFeedback = "Meets needs but tight margin. Consider 15-20% larger array.";
+            colorTag = "YELLOW";
+        } else if (productionRatio >= 0.85) {
+            energyGrade = "C (Marginal)";
+            energyFeedback = "Will slowly drain batteries. Increase array by 15-20%.";
+            colorTag = "YELLOW";
+        } else {
+            energyGrade = "F (Insufficient)";
+            energyFeedback = "CRITICAL: Cannot meet daily demand! Increase by " +
+                    String.format("%.0f%%", (1/productionRatio - 1) * 100) + " minimum.";
+            colorTag = "RED";
+        }
+
+        summary.append(format.tag(String.format("1. **Energy Balance:** %s - %s", energyGrade, energyFeedback), colorTag) + "\n");
+        summary.append(String.format("   (Produces %.0f Wh/day vs %.0f Wh/day needed)\n\n", dailyProduction, totalWh));
+
+        // Battery Resilience Score
+        String resilienceGrade;
+        String resilienceFeedback;
+
+        if (days >= 4) {
+            resilienceGrade = "A+ (Excellent Backup)";
+            resilienceFeedback = days + " days autonomy handles extended storms perfectly.";
+            colorTag = "GREEN";
+        } else if (days >= 3) {
+            resilienceGrade = "A (Strong Backup)";
+            resilienceFeedback = days + " days autonomy covers typical weather events.";
+            colorTag = "GREEN";
+        } else if (days >= 2) {
+            resilienceGrade = "B (Good Backup)";
+            resilienceFeedback = days + " days is adequate. Consider 3+ for critical loads.";
+            colorTag = "YELLOW";
+        } else {
+            resilienceGrade = "C (Minimal Backup)";
+            resilienceFeedback = "Only " + days + " day autonomy. Depends on daily solar charging.";
+            colorTag = "YELLOW";
+        }
+
+        summary.append(format.tag(String.format("2. **Battery Resilience:** %s - %s", resilienceGrade, resilienceFeedback), colorTag) + "\n");
+        summary.append(String.format("   (%.0f Ah @ %dV with %.0f%% DoD = %.1f kWh usable)\n\n",
+                batteryAh, voltage, dod, (batteryAh * voltage * (dod/100)) / 1000));
+
+        // Voltage Optimization Score
+        boolean voltageOptimal = isVoltageOptimal(totalWh, voltage);
+        String voltageGrade;
+        String voltageFeedback;
+
+        if (voltageOptimal) {
+            voltageGrade = "A (Optimal Choice)";
+            voltageFeedback = voltage + "V is perfect for this load size. Minimizes losses.";
+            colorTag = "GREEN";
+        } else {
+            String recommended = totalWh > 4000 ? "48V" : totalWh > 1500 ? "24V" : "12V";
+            voltageGrade = "B (Acceptable)";
+            voltageFeedback = voltage + "V works, but " + recommended + " would be more efficient.";
+            colorTag = "YELLOW";
+        }
+
+        summary.append(format.tag(String.format("3. **Voltage Selection:** %s - %s", voltageGrade, voltageFeedback), colorTag) + "\n");
+        double avgCurrent = totalWh / (voltage * 24);
+        summary.append(String.format("   (Average current: ~%.1f A requires %s wire)\n\n",
+                avgCurrent, voltage >= 48 ? "thin 12-14 AWG" : voltage >= 24 ? "moderate 10-12 AWG" : "thick 6-10 AWG"));
+
+        // Component Sizing Score
+        double inverterUtilization = (appliance.getWatts() * appliance.getQuantity()) / inverterW;
+        String sizingGrade;
+        String sizingFeedback;
+
+        if (inverterUtilization >= 0.5 && inverterUtilization <= 0.8 && productionRatio >= 1.1) {
+            sizingGrade = "A (Well Balanced)";
+            sizingFeedback = "All components properly sized with appropriate safety margins.";
+            colorTag = "GREEN";
+        } else if (inverterUtilization >= 0.4 && productionRatio >= 0.95) {
+            sizingGrade = "B (Good Sizing)";
+            sizingFeedback = "Components sized appropriately with minor room for improvement.";
+            colorTag = "YELLOW";
+        } else {
+            sizingGrade = "C (Needs Adjustment)";
+            sizingFeedback = "Some components oversized or undersized. Review recommendations.";
+            colorTag = "YELLOW";
+        }
+
+        summary.append(format.tag(String.format("4. **Component Sizing:** %s - %s", sizingGrade, sizingFeedback), colorTag) + "\n");
+        summary.append(String.format("   (Inverter efficiency: %.0f%% utilization)\n\n", inverterUtilization * 100));
+
+        // ========================================================================
+        // 4. CRITICAL CONSIDERATIONS & ACTION ITEMS
+        // ========================================================================
+        summary.append("--- ⚠️ CRITICAL CONSIDERATIONS ---\n");
+
+        boolean hasCriticalIssues = false;
+
+        if (productionRatio < 1.0) {
+            summary.append(format.tag("❌ ENERGY DEFICIT: Solar array undersized. System will drain batteries daily!", "RED") + "\n");
+            summary.append(format.tag("   → ACTION: Increase PV array by " +
+                    String.format("%.0f%%", (1/productionRatio - 1) * 100) +
+                    " OR reduce load consumption.", "RED") + "\n");
+            hasCriticalIssues = true;
+        }
+
+        if (batteryAh > 400 && !summary.toString().contains("BMS")) {
+            summary.append(format.tag("❌ SAFETY: Large battery bank REQUIRES Battery Management System (BMS)!", "RED") + "\n");
+            summary.append(format.tag("   → ACTION: Ensure lithium batteries include built-in BMS or add external BMS.", "RED") + "\n");
+            hasCriticalIssues = true;
+        }
+
+        if (!voltageOptimal && totalWh > 2000) {
+            String recommended = totalWh > 4000 ? "48V" : "24V";
+            summary.append(format.tag("⚠️ EFFICIENCY: Voltage suboptimal for this load size.", "YELLOW") + "\n");
+            summary.append(format.tag("   → RECOMMENDATION: Consider " + recommended +
+                    " system for better efficiency and lower wire costs.", "YELLOW") + "\n");
+        }
+
+        if (inverterW > 3000 && voltage < 48) {
+            summary.append(format.tag("⚠️ POWER QUALITY: Large inverter may require split-phase (120V/240V) capability.", "YELLOW") + "\n");
+            summary.append(format.tag("   → ACTION: Verify inverter supports 240V if needed for large appliances.", "YELLOW") + "\n");
+        }
+
+        if (controllerA > 60) {
+            summary.append(format.tag("⚠️ CONTROLLER: Very high current rating may require multiple controllers.", "YELLOW") + "\n");
+            summary.append(format.tag("   → ACTION: Consider 2× smaller controllers in parallel or commercial-grade unit.", "YELLOW") + "\n");
+        }
+
+        if (!hasCriticalIssues) {
+            summary.append(format.tag("✅ No critical issues found. System design is sound.", "GREEN") + "\n");
+        }
+
+        summary.append("\n");
+
+        // ========================================================================
+        // 5. PRE-PURCHASE CHECKLIST
+        // ========================================================================
+        summary.append("--- ✅ PRE-PURCHASE CHECKLIST ---\n");
+        summary.append("Before buying components, verify:\n\n");
+
+        summary.append("**Solar Panels:**\n");
+        summary.append(String.format("  ☐ Total wattage: %.0fW minimum (%.0fW+ recommended)\n", pvWatts * 0.9, pvWatts));
+        summary.append(String.format("  ☐ Panel voltage (Vmp): %.0f-%.0fV for %dV system\n",
+                voltage == 12 ? 17.0 : voltage == 24 ? 34.0 : 68.0,
+                voltage == 12 ? 22.0 : voltage == 24 ? 44.0 : 88.0,
+                voltage));
+        summary.append("  ☐ Warranty: 25-year power output guarantee (standard)\n");
+        summary.append("  ☐ Mounting hardware included or purchased separately\n\n");
+
+        summary.append("**Battery Bank:**\n");
+        summary.append(String.format("  ☐ Capacity: %.0f Ah minimum @ %dV\n", batteryAh, voltage));
+        summary.append("  ☐ Chemistry: LiFePO4 recommended (10+ year lifespan)\n");
+        summary.append("  ☐ BMS included (critical for lithium batteries)\n");
+        summary.append("  ☐ Temperature rating suitable for installation location\n");
+        if (batteryAh > 200) {
+            summary.append("  ☐ Consider modular batteries for easier replacement\n");
+        }
+        summary.append("\n");
+
+        summary.append("**Inverter:**\n");
+        summary.append(String.format("  ☐ Continuous rating: %.0fW minimum\n", inverterW));
+        summary.append(String.format("  ☐ Surge rating: %.0fW minimum (2× continuous)\n", inverterW * 2));
+        summary.append("  ☐ Pure sine wave (required for sensitive electronics)\n");
+        summary.append(String.format("  ☐ Input voltage: %dV DC\n", voltage));
+        summary.append("  ☐ Output: 120V AC " + (inverterW > 3000 ? "(or 120/240V split-phase)" : "") + "\n");
+        summary.append("  ☐ Efficiency: >90% at 50-80% load\n\n");
+
+        summary.append("**Charge Controller:**\n");
+        summary.append(String.format("  ☐ Current rating: %.0fA minimum (MPPT type)\n", controllerA));
+        summary.append(String.format("  ☐ System voltage: %dV compatible\n", voltage));
+        summary.append(String.format("  ☐ Max PV input: %.0fV minimum\n",
+                voltage == 12 ? 50.0 : voltage == 24 ? 100.0 : 150.0));
+        summary.append("  ☐ Temperature compensation feature included\n");
+        summary.append("  ☐ Display/monitoring capabilities (recommended)\n\n");
+
+        summary.append("**Wiring & Safety:**\n");
+        double wireGauge = voltage == 12 ? 6 : voltage == 24 ? 10 : 12;
+        summary.append(String.format("  ☐ Wire gauge: %.0f AWG minimum for main runs\n", wireGauge));
+        summary.append("  ☐ DC-rated circuit breakers for all components\n");
+        summary.append("  ☐ Fuses: PV input, battery, inverter connections\n");
+        summary.append("  ☐ Properly rated MC4 connectors for solar panels\n");
+        if (totalWh > 2000) {
+            summary.append("  ☐ Battery disconnect switch (required for safety)\n");
+            summary.append("  ☐ Ground fault protection (GFPD) for solar array\n");
+        }
+        summary.append("\n");
+
+        // ========================================================================
+        // 6. INSTALLATION PRIORITIES
+        // ========================================================================
+        summary.append("--- 🔧 INSTALLATION PRIORITIES ---\n");
+        summary.append("Complete these steps in order:\n\n");
+
+        summary.append("**Phase 1: Planning (1-2 weeks before)**\n");
+        if (totalWh > 3000 || inverterW > 3000) {
+            summary.append("  1. Check local codes and permit requirements (REQUIRED for large systems)\n");
+            summary.append("  2. Schedule electrical inspection if needed\n");
+        } else {
+            summary.append("  1. Review local codes (permits may not be required for small systems)\n");
+        }
+        summary.append("  2. Measure and plan mounting locations (roof/ground/wall)\n");
+        summary.append("  3. Calculate exact wire runs and sizes\n");
+        summary.append("  4. Order all components with 2-week buffer for delivery\n\n");
+
+        summary.append("**Phase 2: Installation**\n");
+        summary.append("  1. Mount solar panels with proper orientation (south-facing, optimal tilt)\n");
+        summary.append("  2. Install battery bank in temperature-controlled, ventilated area\n");
+        summary.append("  3. Mount charge controller near batteries (short wire runs)\n");
+        summary.append("  4. Install inverter close to main loads\n");
+        summary.append("  5. Wire DC side FIRST (PV → Controller → Battery)\n");
+        summary.append("  6. Add all fuses and breakers BEFORE connecting battery\n");
+        summary.append("  7. Wire AC side LAST (Inverter → Load panel)\n\n");
+
+        summary.append("**Phase 3: Testing & Commissioning**\n");
+        summary.append("  1. Verify all voltages with multimeter before powering on\n");
+        summary.append("  2. Check polarity (critical - reverse polarity destroys components!)\n");
+        summary.append("  3. Power on charge controller, verify battery charging\n");
+        summary.append("  4. Test inverter with small load first, then gradually increase\n");
+        summary.append("  5. Monitor system for 3-5 days to verify performance\n");
+        summary.append("  6. Document all settings and take photos for reference\n\n");
+
+        // ========================================================================
+        // 7. ONGOING MAINTENANCE SCHEDULE
+        // ========================================================================
+        summary.append("--- 🛠️ MAINTENANCE SCHEDULE ---\n");
+
+        summary.append("**Monthly:**\n");
+        summary.append("  • Check battery voltage and state of charge\n");
+        summary.append("  • Inspect all connections for corrosion or looseness\n");
+        summary.append("  • Clean dust from inverter and controller vents\n\n");
+
+        summary.append("**Quarterly:**\n");
+        summary.append("  • Clean solar panels (bird droppings, dust, pollen)\n");
+        summary.append("  • Verify charge controller settings and performance\n");
+        summary.append("  • Check for any unusual noises or heat from components\n\n");
+
+        summary.append("**Annually:**\n");
+        summary.append("  • Professional inspection (recommended for systems >3kW)\n");
+        summary.append("  • Battery capacity test and equalization (if lead-acid)\n");
+        summary.append("  • Torque-check all electrical connections\n");
+        summary.append("  • Update firmware on smart controllers/inverters\n\n");
+
+        // ========================================================================
+        // 8. EXPANSION PLANNING
+        // ========================================================================
+        if (totalWh < 5000) {
+            summary.append("--- 📈 FUTURE EXPANSION OPTIONS ---\n");
+            summary.append("Plan for growth by:\n\n");
+
+            summary.append("  • **Add More Panels:** System can easily handle 20-30% more PV capacity\n");
+            summary.append(String.format("    → Up to %.0fW without controller upgrade\n", pvWatts * 1.3));
+
+            summary.append("  • **Add Battery Capacity:** Increase autonomy or support more loads\n");
+            summary.append(String.format("    → Can parallel additional %.0fAh @ %dV banks\n", batteryAh, voltage));
+
+            if (inverterW < 3000) {
+                summary.append("  • **Upgrade Inverter:** If loads increase significantly\n");
+                summary.append(String.format("    → Next size up: %.0fW (plan wiring accordingly)\n",
+                        Math.ceil(inverterW * 1.5 / 500) * 500));
+            }
+
+            summary.append("\n  💡 TIP: Size conduit and wiring 25-30% larger than current needs!\n\n");
+        }
+
+        // ========================================================================
+        // 9. COST-BENEFIT ANALYSIS
+        // ========================================================================
+        summary.append("--- 💵 RETURN ON INVESTMENT ---\n");
+
+        double monthlyKwh = (totalWh * 30) / 1000;
+        double monthlySavings = monthlyKwh * 11; // Average ₱11/kWh (Meralco rates)
+        double annualSavings = monthlySavings * 12;
+        double paybackYears = estimatedCost / annualSavings;
+
+        summary.append(String.format("• **Grid Equivalent:** %.1f kWh/month\n", monthlyKwh));
+        summary.append(String.format("• **Monthly Savings:** ₱%.0f (at ₱11/kWh Meralco rate)\n", monthlySavings));
+        summary.append(String.format("• **Annual Savings:** ₱%.0f\n", annualSavings));
+
+        if (paybackYears < 6) {
+            summary.append(format.tag(String.format("• **Payback Period:** ~%.1f years (Excellent ROI for PH)", paybackYears), "GREEN") + "\n");
+        } else if (paybackYears < 12) {
+            summary.append(format.tag(String.format("• **Payback Period:** ~%.1f years (Good ROI)", paybackYears), "YELLOW") + "\n");
+        } else {
+            summary.append(format.tag(String.format("• **Payback Period:** ~%.1f years (Long-term investment)", paybackYears), "YELLOW") + "\n");
+        }
+
+        summary.append("\n**Additional Benefits (Not Quantified):**\n");
+        summary.append("  • Energy independence during brownouts/blackouts (common in PH)\n");
+        summary.append("  • Protection from Meralco rate increases\n");
+        summary.append("  • Reduced carbon footprint\n");
+        summary.append("  • Increased property value\n");
+        if (totalWh < 2000) {
+            summary.append("  • Portable power for emergencies or recreation\n");
+        }
+        summary.append("\n");
+
+        // ========================================================================
+        // 10. FINAL VERDICT & RECOMMENDATION
+        // ========================================================================
+        summary.append("═══════════════════════════════════════════════════════════════\n");
+        summary.append("                  🌟 FINAL RECOMMENDATION\n");
+        summary.append("═══════════════════════════════════════════════════════════════\n\n");
+
+        // Calculate overall system score
+        int score = 0;
+        if (productionRatio >= 1.2) score += 25;
+        else if (productionRatio >= 1.0) score += 15;
+        else if (productionRatio >= 0.85) score += 5;
+
+        if (days >= 3) score += 25;
+        else if (days >= 2) score += 20;
+        else if (days >= 1) score += 10;
+
+        if (voltageOptimal) score += 25;
+        else score += 15;
+
+        if (inverterUtilization >= 0.5 && inverterUtilization <= 0.8) score += 25;
+        else if (inverterUtilization >= 0.4) score += 15;
+        else score += 10;
+
+        String overallGrade;
+        String verdict;
+        String action;
+
+        if (score >= 90) {
+            overallGrade = "A+ (Excellent System)";
+            verdict = "This is an **EXCEPTIONALLY WELL-DESIGNED SYSTEM** with optimal component sizing, "
+                    + "strong energy margins, and excellent resilience. All aspects of the design demonstrate "
+                    + "careful planning and adherence to best practices.";
+            action = "**PROCEED WITH CONFIDENCE.** This system will provide reliable, efficient power for years. "
+                    + "Focus on quality components and proper installation.";
+            colorTag = "GREEN";
+        } else if (score >= 75) {
+            overallGrade = "A (Very Good System)";
+            verdict = "This is a **SOLID, WELL-BALANCED SYSTEM** that will meet your needs effectively. "
+                    + "Component sizing is appropriate with good safety margins. Minor optimizations possible "
+                    + "but not critical.";
+            action = "**RECOMMENDED FOR IMPLEMENTATION.** Review the considerations above, but overall this "
+                    + "design is sound. Expect reliable performance with proper maintenance.";
+            colorTag = "GREEN";
+        } else if (score >= 60) {
+            overallGrade = "B (Good System with Caveats)";
+            verdict = "This is a **FUNCTIONAL SYSTEM** that will work, but has areas for improvement. "
+                    + "Some components may be slightly undersized or oversized. Review the yellow-flagged "
+                    + "items carefully.";
+            action = "**PROCEED WITH ADJUSTMENTS.** Address the recommendations in the 'Critical Considerations' "
+                    + "section before purchasing. Small changes will significantly improve performance.";
+            colorTag = "YELLOW";
+        } else if (score >= 40) {
+            overallGrade = "C (Needs Significant Improvement)";
+            verdict = "This system has **SEVERAL DESIGN ISSUES** that should be addressed before implementation. "
+                    + "While it may function, performance will be suboptimal and reliability may be compromised.";
+            action = "**REVISE DESIGN BEFORE PROCEEDING.** Work through the critical issues identified above. "
+                    + "Consider consulting with a solar professional for design review.";
+            colorTag = "YELLOW";
+        } else {
+            overallGrade = "D (Major Concerns)";
+            verdict = "This system has **CRITICAL DESIGN FLAWS** that will prevent proper operation. "
+                    + "Components are significantly mismatched or undersized. System will not meet expectations.";
+            action = "**DO NOT PROCEED WITHOUT MAJOR REVISIONS.** Strongly recommend professional consultation. "
+                    + "Current design will lead to poor performance, shortened component life, or safety issues.";
+            colorTag = "RED";
+        }
+
+        summary.append(format.tag("**Overall Grade:** " + overallGrade + " (Score: " + score + "/100)", colorTag) + "\n\n");
+        summary.append(format.tag(verdict, colorTag) + "\n\n");
+        summary.append(format.tag("**Next Steps:** " + action, colorTag) + "\n\n");
+
+        // Personalized closing based on system size
+        if (totalWh < 1000) {
+            summary.append("This is a great entry-level system! Perfect for learning solar basics and gaining "
+                    + "hands-on experience. Start small, learn the principles, then expand as needed.\n");
+        } else if (totalWh < 3000) {
+            summary.append("This system represents the sweet spot for residential off-grid or backup power. "
+                    + "It's large enough to be useful but manageable enough for careful DIY installation. "
+                    + "Take your time, follow safety protocols, and enjoy energy independence!\n");
+        } else {
+            summary.append("This is a substantial investment in energy independence. Given the system size and "
+                    + "complexity, professional installation is strongly recommended unless you have significant "
+                    + "electrical experience. The payoff will be comprehensive, reliable power for your home.\n");
+        }
+
+        summary.append("\n");
+        summary.append("═══════════════════════════════════════════════════════════════\n");
+        summary.append("        📋 Save this analysis for reference during installation!\n");
+        summary.append("═══════════════════════════════════════════════════════════════\n");
+
+        return summary.toString();
+    }
+
+
+// === Helper Methods ===
+
+    private double estimateSystemCost(double pvWatts, double batteryAh, double inverterW, int voltage) {
+        CountryConfig country = appliance.getCountry();
+
+        double pvCost = pvWatts * country.getSolarPanelPricePerWatt();
+        double batteryCost = batteryAh * country.getBatteryPricePerAh();
+        double inverterCost = inverterW * country.getInverterPricePerWatt();
+        double controllerCost = (pvWatts/voltage) * country.getControllerPricePerAmp();
+
+        // Voltage-based wiring cost adjustment
+        double wiringCostMultiplier = voltage == 12 ? 1.3 : voltage == 24 ? 1.0 : 0.8;
+        double wiringCost = country.getWiringCostBase() * wiringCostMultiplier;
+
+        // Size-based mounting cost
+        double mountingMultiplier = pvWatts < 1000 ? 1.0 : pvWatts < 3000 ? 2.0 : 3.0;
+        double mountingCost = country.getWiringCostBase() * mountingMultiplier;
+
+        double miscCost = country.getWiringCostBase() * 0.67; // ~67% of wiring cost
+
+        return pvCost + batteryCost + inverterCost + controllerCost + wiringCost + mountingCost + miscCost;
+    }
+
+    private boolean isVoltageOptimal(double totalWh, int voltage) {
+        // Industry best practices for voltage selection
+        if (totalWh < 1000) return voltage == 12;
+        if (totalWh < 3000) return voltage == 24;
+        return voltage == 48;
     }
 
     private void exportResultsToPDF() {
@@ -1014,7 +1711,7 @@ public class ApplianceDetailsPanel extends JPanel {
                         resultsCard.add(Box.createVerticalStrut(8));
                     } else if (isInputParameter(label)) {
                         if (!analysisSection) {
-                            addSectionHeader("Input Parameters");
+                            addSectionHeader("");
                             analysisSection = true; // Use a different flag if necessary
                         }
                         JPanel paramPanel = createParameterPanel(label, value);
@@ -1098,8 +1795,8 @@ public class ApplianceDetailsPanel extends JPanel {
     }
 
     private boolean isInputParameter(String label) {
-        return label.equals("System Voltage") || label.equals("Peak Sun Hours") ||
-                label.equals("Depth of Discharge") || label.equals("Days of Autonomy");
+        return label.equals("") || label.equals("") ||
+                label.equals("") || label.equals("");
     }
 
     private void addSectionHeader(String title) {
@@ -1249,9 +1946,82 @@ public class ApplianceDetailsPanel extends JPanel {
             }
         });
 
+        JButton countryBtn = new JButton("🌏 Change Country/Region");
+        countryBtn.addActionListener((ActionEvent e) -> {
+            showCountrySelectionDialog();
+        });
+
         toolbar.add(saveBtn);
         toolbar.add(loadBtn);
+        toolbar.add(countryBtn);
         return toolbar;
     }
+    private void showCountrySelectionDialog() {
+        // Create a dialog
+        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this),
+                "Select Country/Region", true);
+        dialog.setLayout(new BorderLayout(10, 10));
+        dialog.setSize(400, 200);
+        dialog.setLocationRelativeTo(this);
 
+        // Create panel for country selection
+        JPanel contentPanel = new JPanel(new GridBagLayout());
+        contentPanel.setBackground(CARD_BACKGROUND);
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Label
+        JLabel label = new JLabel("Country/Region:");
+        label.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        label.setForeground(TEXT_PRIMARY);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        contentPanel.add(label, gbc);
+
+        // Country selector
+        JComboBox<CountryConfig> countrySelector = new JComboBox<>(CountryConfig.values());
+        countrySelector.setSelectedItem(appliance.getCountry());
+        countrySelector.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        countrySelector.setBackground(Color.WHITE);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        contentPanel.add(countrySelector, gbc);
+
+        dialog.add(contentPanel, BorderLayout.CENTER);
+
+        // Buttons panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        buttonPanel.setBackground(CARD_BACKGROUND);
+
+        JButton applyBtn = createStyledButton("Apply", SUCCESS_COLOR, new Color(22, 163, 74));
+        applyBtn.setPreferredSize(new Dimension(100, 35));
+        applyBtn.addActionListener(e -> {
+            appliance.setCountry((CountryConfig) countrySelector.getSelectedItem());
+            JOptionPane.showMessageDialog(dialog,
+                    "Country changed to: " + countrySelector.getSelectedItem(),
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // Optionally recalculate if results are already shown
+            if (tabbedPane.getSelectedIndex() == 2) {
+                calculateThisAppliance();
+            }
+
+            dialog.dispose();
+        });
+
+        JButton cancelBtn = createStyledButton("Cancel", new Color(100, 116, 139), new Color(71, 85, 105));
+        cancelBtn.setPreferredSize(new Dimension(100, 35));
+        cancelBtn.addActionListener(e -> dialog.dispose());
+
+        buttonPanel.add(applyBtn);
+        buttonPanel.add(cancelBtn);
+
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+
+        dialog.setVisible(true);
+    }
 }
