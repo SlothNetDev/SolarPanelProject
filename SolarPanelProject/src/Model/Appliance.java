@@ -17,13 +17,19 @@ public class Appliance {
     private double depthOfDischarge;
     private int daysOfAutonomy;
     private int systemVoltage;
-
+    private CountryConfig country = CountryConfig.PHILIPPINES; // Default
     public Appliance(String name, double watts, int quantity, double hoursPerDay) {
         this.name = name;
         this.watts = watts;
         this.quantity = quantity;
         this.hoursPerDay = hoursPerDay;
     }
+
+    //country getter setter
+    public CountryConfig getCountry() { return country; }
+    public void setCountry(CountryConfig country) { this.country = country; }
+
+
     // NEW: Enhanced validation to include solar parameters
     public static boolean validateInputs(Component parent, String name, String wattsText,
                                          String qtyText, String hoursText, String pshText,
