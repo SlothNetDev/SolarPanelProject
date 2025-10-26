@@ -1,6 +1,8 @@
 package UI;
 
 import Model.Appliance;
+import Utils.ProjectManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -48,6 +50,7 @@ public class LoadInputPanel extends JPanel {
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane, BorderLayout.CENTER);
+        add(loadingFile(), BorderLayout.NORTH);add(loadingFile(), BorderLayout.NORTH);
     }
 
     private JPanel createMainContent() {
@@ -116,7 +119,25 @@ public class LoadInputPanel extends JPanel {
 
         return headerPanel;
     }
+    private JPanel loadingFile(){
+        JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        toolbar.setBackground(new Color(245, 245, 245));
+        JButton loadBtn = new JButton("📂 Load Project");
+        loadBtn.addActionListener((ActionEvent e) -> {
+            List<Appliance> loaded = ProjectManager.loadProject(this);
+            if (loaded != null) {
+                mainPage.getAppliances().clear();
+                mainPage.getAppliances().addAll(loaded);
+                JOptionPane.showMessageDialog(this,
+                        "Loaded " + loaded.size() + " appliances.",
+                        "Load Successful", JOptionPane.INFORMATION_MESSAGE);
+                mainPage.showApplianceListPanel(); // Refresh after load
+            }
+        });
 
+        toolbar.add(loadBtn);
+        return toolbar;
+    }
     private JPanel createFormCard() {
         JPanel card = new JPanel(new GridBagLayout());
         card.setBackground(CARD_BG);

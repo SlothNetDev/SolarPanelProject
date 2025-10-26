@@ -1924,18 +1924,7 @@ public class ApplianceDetailsPanel extends JPanel {
             ProjectManager.saveProject(this, mainPage.getAppliances());
         });
 
-        JButton loadBtn = new JButton("📂 Load Project");
-        loadBtn.addActionListener((ActionEvent e) -> {
-            List<Appliance> loaded = ProjectManager.loadProject(this);
-            if (loaded != null) {
-                mainPage.getAppliances().clear();
-                mainPage.getAppliances().addAll(loaded);
-                JOptionPane.showMessageDialog(this,
-                        "Loaded " + loaded.size() + " appliances.",
-                        "Load Successful", JOptionPane.INFORMATION_MESSAGE);
-                mainPage.showApplianceListPanel(); // Refresh after load
-            }
-        });
+
 
         JButton countryBtn = new JButton("🌏 Change Country/Region");
         countryBtn.addActionListener((ActionEvent e) -> {
@@ -1943,7 +1932,6 @@ public class ApplianceDetailsPanel extends JPanel {
         });
 
         toolbar.add(saveBtn);
-        toolbar.add(loadBtn);
         toolbar.add(countryBtn);
         return toolbar;
     }
