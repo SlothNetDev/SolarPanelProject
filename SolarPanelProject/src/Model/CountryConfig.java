@@ -1,5 +1,10 @@
 package Model;
 
+/**
+ * Represents configuration details related to a specific country for solar energy systems.
+ * Each country configuration includes the country's display name, currency symbol, and various cost factors
+ * associated with solar energy components and installation.
+ */
 public enum CountryConfig {
     PHILIPPINES("Philippines", "₱", 10.0, 35.0, 120.0, 15.0, 500.0, 18000.0, 12000.0),
     USA("United States", "$", 0.18, 0.50, 2.0, 0.30, 10.0, 500.0, 300.0),

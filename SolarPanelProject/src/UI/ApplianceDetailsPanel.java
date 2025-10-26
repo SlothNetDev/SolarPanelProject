@@ -23,43 +23,34 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Element;
 
 /**
- * The ApplianceDetailsPanel class is a JPanel-based GUI component used for displaying
- * and editing details about an appliance, including its basic specifications and solar parameters.
- * It provides a user-friendly interface for modifying appliance data, performing energy calculations,
- * and exporting analysis results.
+ * The ApplianceDetailsPanel class is a graphical user interface component that extends JPanel
+ * and is used to display and manage the details of an appliance. It integrates various UI
+ * features and functionalities for displaying, editing, and analyzing appliance data,
+ * including both basic and solar-specific parameters, results visualization, and user interaction.
  *
- * Fields:
- * - Appliance and UI related fields store the appliance being edited, the main application page reference,
- *   input fields for data entry, UI components for displaying results, color themes, and other properties.
- * - Styling fields define colors and formatting used within the UI.
- * - Functional fields manage data validation, state tracking, and UI behavior.
+ * This panel provides multiple tabs for organizing the data, such as basic details, solar
+ * parameters, and calculated results. It also includes mechanisms for validating input, detecting
+ * unsaved changes, and exporting results in PDF or CSV formats.
  *
- * Methods:
- * - Constructor:
- *   Initializes the panel with the provided appliance instance and links to the main application page.
+ * Key Functions:
+ * - Display and edit appliance details and parameters.
+ * - Perform calculations and analytics for energy consumption and system designs.
+ * - Export results to files and handle user interactions for data management.
  *
- * - UI Initialization:
- *   Methods such as `initializeUI` and `createFormCard` create and configure input forms, tabbed panes,
- *   and results panels.
+ * Constants:
+ * - BACKGROUND_COLOR: Default background color for the panel.
+ * - CARD_BACKGROUND: Background color for individual cards in the UI.
+ * - PRIMARY_COLOR: Primary UI color used for highlights.
+ * - SUCCESS_COLOR: Color indicating success states in the UI.
+ * - WARNING_COLOR: Color indicating warning states in the UI.
+ * - TEXT_PRIMARY: Primary text color used for standard text.
+ * - TEXT_SECONDARY: Secondary text color used for supporting text.
+ * - BORDER_COLOR: Default border color for card elements.
  *
- * - Change Management:
- *   Methods like `addChangeListeners`, `checkForChanges`, and `promptSaveChanges` handle user edits and
- *   manage save prompts to prevent loss of unsaved changes.
- *
- * - Data Management:
- *   Methods such as `storeOriginalData`, `loadApplianceData`, and `saveChanges` manage appliance data
- *   persistence.
- *
- * - Solar Calculations:
- *   Provides methods like `calculateThisAppliance` and `generateSystemAnalysis` for performing energy
- *   and solar system calculations based on user input.
- *
- * - Results Export:
- *   Includes `exportResultsToPDF` and CSV export methods for saving analysis results to external files.
- *
- * - UI Utilities:
- *   Helper methods like `createStyledButton`, `createMetricPanel`, and `getColorForMetric` assist in
- *   constructing various UI components and customizing appearance.
+ * Dependencies:
+ * - Manipulates data from the Appliance object.
+ * - Interacts with the MainPage for application-wide context.
+ * - Utilizes various JPanel components for layout and display.
  */
 public class ApplianceDetailsPanel extends JPanel {
 

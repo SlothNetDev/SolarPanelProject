@@ -9,13 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Add detailed class-level Javadoc comments for UI panels, SolarCalculator, and Appliance classes">
-      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/CountryConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Model/Appliance.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/Appliance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/LoadInputPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/LoadInputPanel.java" afterDir="false" />
-    </list>
+    <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Update `.idea` workspace to reflect changes in run configurations and tracked files for recent updates" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -136,30 +130,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760055893993</updated>
-    </task>
-    <task id="LOCAL-00001" summary="feat: Adding the parameters and constructor to the Appliance.java for Model">
-      <option name="closed" value="true" />
-      <created>1760062705454</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1760062705454</updated>
-    </task>
-    <task id="LOCAL-00002" summary="feat: Adding the validator for solar parameters which will be included">
-      <option name="closed" value="true" />
-      <created>1760062863112</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1760062863112</updated>
-    </task>
-    <task id="LOCAL-00003" summary="feat: Add getters and setters for Appliance fields, including solar parameters">
-      <option name="closed" value="true" />
-      <created>1760062931840</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1760062931840</updated>
     </task>
     <task id="LOCAL-00004" summary="feat: Add initial SolarCalculator class to Model package">
       <option name="closed" value="true" />
@@ -513,7 +483,47 @@
       <option name="project" value="LOCAL" />
       <updated>1761292770186</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="feat: Add `country` field with getter and setter to `Appliance` class for country-specific configurations">
+      <option name="closed" value="true" />
+      <created>1761430240151</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1761430240151</updated>
+    </task>
+    <task id="LOCAL-00049" summary="feat: Enhance appliance detail analysis with detailed energy demand, solar array, battery, and inverter evaluations">
+      <option name="closed" value="true" />
+      <created>1761430258568</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1761430258568</updated>
+    </task>
+    <task id="LOCAL-00050" summary="feat: Add `CountryConfig` enum with country-specific parameters for solar project customization">
+      <option name="closed" value="true" />
+      <created>1761430282607</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1761430282609</updated>
+    </task>
+    <task id="LOCAL-00051" summary="feat: Add input validations for appliance name, power, quantity, and hours in LoadInputPanel">
+      <option name="closed" value="true" />
+      <created>1761430297237</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1761430297237</updated>
+    </task>
+    <task id="LOCAL-00052" summary="feat: Update `.idea` workspace to reflect changes in run configurations and tracked files for recent updates">
+      <option name="closed" value="true" />
+      <created>1761430339797</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1761430339797</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -528,12 +538,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Add unsaved changes tracking and prompts to `ApplianceDetailsList` with dynamic tab title updates" />
-    <MESSAGE value="feat: Add detailed input panels for appliance and solar parameters in `ApplianceDetailsList` UI" />
-    <MESSAGE value="feat: Add export to PDF/CSV functionality and results panel to `ApplianceDetailsList` UI" />
-    <MESSAGE value="feat: Add form card and dynamic form field creation to `ApplianceDetailsList` UI" />
-    <MESSAGE value="feat: Add styled button creation, card border, and appliance data loading methods to `ApplianceDetailsList` UI" />
-    <MESSAGE value="feat: Add save functionality to `ApplianceDetailsList` with validation, numeric parsing, and error handling" />
     <MESSAGE value="feat: Add calculation functionality to `ApplianceDetailsList` with auto-save, validation, intelligent analysis, and results display" />
     <MESSAGE value="feat: Add PDF export functionality with modern styling, structured data, and error handling to `ApplianceDetailsList` UI" />
     <MESSAGE value="feat: Add export to CSV functionality with structured data, calculations, and error handling to `ApplianceDetailsList` UI" />
@@ -553,7 +557,13 @@
     <MESSAGE value="feat: Add new `.idea` artifact configuration for `SolarPanelProject:jar` with updated dependencies" />
     <MESSAGE value="feat: Update `.idea` workspace with new artifact configuration for `SolarPanelProject:jar` and additional task adjustments" />
     <MESSAGE value="feat: Add detailed class-level Javadoc comments for UI panels, SolarCalculator, and Appliance classes" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Add detailed class-level Javadoc comments for UI panels, SolarCalculator, and Appliance classes" />
+    <MESSAGE value="feat: Add `country` field with getter and setter to `Appliance` class for country-specific configurations" />
+    <MESSAGE value="feat: Enhance appliance detail analysis with detailed energy demand, solar array, battery, and inverter evaluations" />
+    <MESSAGE value="feat: Add `CountryConfig` enum to define country-specific configurations for solar system cost and pricing factors" />
+    <MESSAGE value="feat: Add `CountryConfig` enum with country-specific parameters for solar project customization" />
+    <MESSAGE value="feat: Add input validations for appliance name, power, quantity, and hours in LoadInputPanel" />
+    <MESSAGE value="feat: Update `.idea` workspace to reflect changes in run configurations and tracked files for recent updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Update `.idea` workspace to reflect changes in run configurations and tracked files for recent updates" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
