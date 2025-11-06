@@ -191,6 +191,7 @@ public class SolarCalculator {
         return Math.ceil(current / 20) * 20;
     }
 
+
     // ---- Getters for configuration values ----
     public double getSystemEfficiency() { return systemEfficiency; }
     public double getInverterSafetyFactor() { return inverterSafetyFactor; }

@@ -64,6 +64,8 @@ public class ApplianceListPanel extends JPanel {
         mainScroll.setBorder(null);
         mainScroll.getVerticalScrollBar().setUnitIncrement(16);
         add(mainScroll, BorderLayout.CENTER);
+        JButton solarParamsBtn = new JButton("⚙️ Solar Parameters");
+        solarParamsBtn.addActionListener(e -> mainPage.showSolarParametersPanel());
     }
 
     private JPanel createMainContent() {

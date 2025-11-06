@@ -10,9 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="feat: Simplify and enhance Javadoc for `ApplianceDetailsPanel` with improved clarity and structure">
+      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/SolarParametersPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SolarPanelProject/src/Utils/ProjectData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Model/SolarCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Model/SolarCalculator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceDetailsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceListPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/ApplianceListPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/LoadInputPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/LoadInputPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/UI/MainPage.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/UI/MainPage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SolarPanelProject/src/Utils/ProjectManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SolarPanelProject/src/Utils/ProjectManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,6 +53,9 @@
     &quot;accountId&quot;: &quot;0fb9ba48-3abd-4f74-a4f4-6d2e51e85139&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -57,29 +67,41 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.SolarApp.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SolarPanel.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
-    &quot;JUnit.SolarCalculatorTest.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/jervi/Downloads/SolarPanelProject&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AIAssistantPromptsLibrary&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.SolarApp.executor": "Run",
+    "Application.SolarPanel.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "true",
+    "JUnit.SolarCalculatorTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "true",
+    "Repository.Attach.Sources": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "Main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Vanessa/Downloads/SolarPanel.Java",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="UI" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.SolarApp">
     <configuration name="SolarApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.SolarApp" />
@@ -120,13 +142,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="7c8e6d23-fc08-47a8-abe7-51d5ed18ad25" name="Changes" comment="" />
@@ -134,6 +149,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760055893993</updated>
+      <workItem from="1761845708862" duration="767000" />
     </task>
     <task id="LOCAL-00005" summary="feat: Add default configuration values to SolarCalculator for improved accuracy">
       <option name="closed" value="true" />
@@ -529,6 +545,9 @@
     </task>
     <option name="localTasksCounter" value="54" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

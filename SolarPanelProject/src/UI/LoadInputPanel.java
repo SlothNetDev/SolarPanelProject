@@ -1,7 +1,9 @@
 package UI;
 
 import Model.Appliance;
+import Utils.ProjectData;
 import Utils.ProjectManager;
+import Model.SolarCalculator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -119,18 +121,53 @@ public class LoadInputPanel extends JPanel {
 
         return headerPanel;
     }
+
     private JPanel loadingFile(){
         JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         toolbar.setBackground(new Color(245, 245, 245));
         JButton loadBtn = new JButton("📂 Load Project");
         loadBtn.addActionListener((ActionEvent e) -> {
-            List<Appliance> loaded = ProjectManager.loadProject(this);
-            if (loaded != null) {
+            ProjectData loadedData = ProjectManager.loadProject(this);
+            if (loadedData != null) {
+                System.out.println("=== Loading Project Data ===");
+                System.out.println("Loaded from JSON:");
+                System.out.println("  PSH: " + loadedData.getPeakSunHours());
+                System.out.println("  DoD: " + loadedData.getDepthOfDischarge());
+                System.out.println("  Days: " + loadedData.getDaysOfAutonomy());
+                System.out.println("  Voltage: " + loadedData.getSystemVoltage());
+
+                // Store solar parameters in MainPage FIRST (single source of truth)
+                mainPage.setPeakSunHours(loadedData.getPeakSunHours());
+                mainPage.setDepthOfDischarge(loadedData.getDepthOfDischarge());
+                mainPage.setDaysOfAutonomy(loadedData.getDaysOfAutonomy());
+                mainPage.setSystemVoltage(loadedData.getSystemVoltage());
+
+                System.out.println("Stored in MainPage:");
+                System.out.println("  PSH: " + mainPage.getPeakSunHours());
+                System.out.println("  DoD: " + mainPage.getDepthOfDischarge());
+                System.out.println("  Days: " + mainPage.getDaysOfAutonomy());
+                System.out.println("  Voltage: " + mainPage.getSystemVoltage());
+
+                // Update appliances
                 mainPage.getAppliances().clear();
-                mainPage.getAppliances().addAll(loaded);
-                JOptionPane.showMessageDialog(this,
-                        "Loaded " + loaded.size() + " appliances.",
-                        "Load Successful", JOptionPane.INFORMATION_MESSAGE);
+                mainPage.getAppliances().addAll(loadedData.getAppliances());
+
+                // Sync the loaded solar parameters to ALL appliances
+                for (Model.Appliance appliance : mainPage.getAppliances()) {
+                    appliance.setPeakSunHours(loadedData.getPeakSunHours());
+                    appliance.setDepthOfDischarge(loadedData.getDepthOfDischarge());
+                    appliance.setDaysOfAutonomy(loadedData.getDaysOfAutonomy());
+                    appliance.setSystemVoltage(loadedData.getSystemVoltage());
+                }
+
+                System.out.println("===========================");
+
+                showSuccess("✓ Project loaded successfully!\n" +
+                        "Loaded " + loadedData.getAppliances().size() + " appliances.\n" +
+                        "Solar parameters: " + loadedData.getPeakSunHours() + " PSH, " +
+                        loadedData.getDepthOfDischarge() + "% DoD, " +
+                        loadedData.getDaysOfAutonomy() + " days, " +
+                        loadedData.getSystemVoltage() + "V");
                 mainPage.showApplianceListPanel(); // Refresh after load
             }
         });
@@ -138,6 +175,8 @@ public class LoadInputPanel extends JPanel {
         toolbar.add(loadBtn);
         return toolbar;
     }
+
+
     private JPanel createFormCard() {
         JPanel card = new JPanel(new GridBagLayout());
         card.setBackground(CARD_BG);
